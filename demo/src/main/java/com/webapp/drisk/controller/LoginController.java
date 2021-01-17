@@ -104,6 +104,12 @@ public class LoginController {
         }
         return modelAndView;
     }
+    
+    
+    @RequestMapping(value="/game")
+    public String game(){
+        return "game";
+    }
 
     /*@RequestMapping(value="/home", method = RequestMethod.GET)
     public ModelAndView home(){

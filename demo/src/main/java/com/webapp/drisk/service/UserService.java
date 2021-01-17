@@ -3,10 +3,7 @@ package com.webapp.drisk.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import com.webapp.drisk.model.Role;
 import com.webapp.drisk.model.User;
-import com.webapp.drisk.repository.RoleRepository;
 import com.webapp.drisk.repository.UserRepository;
 
 import java.util.Arrays;

@@ -1,5 +1,6 @@
 <DOCTYPE html>
-<html lang="it">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -28,6 +29,21 @@
                     <ul class="navbar-nav ml-auto my-2 my-lg-0">
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">Informazioni</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contatti</a></li>
+					     <form th:action="@{/login}" method="get">
+					        <button class="btn btn-md btn-danger btn-block" 
+					                type="Submit">Accedi
+					        </button>
+					    </form>
+					    <form th:action="@{/registration}" method="get">
+					        <button class="nav-link js-scroll-trigger"
+					                type="Submit">Registrati
+					        </button>
+					    </form>
+					    <form th:action="@{/logout}" method="get">
+					        <button class="nav-link js-scroll-trigger" 
+					                type="Submit">Logout
+					        </button>
+					    </form>
                     </ul>
                 </div>
             </div>
@@ -41,24 +57,9 @@
                         <h2><span class="text-success" th:utext="${session.user_name}"></span></h2>
                         <hr class="divider my-4" />
                     </div>
- 	<form th:action="@{/login}" method="get">
-        <button class="btn btn-md btn-danger btn-block" 
-                type="Submit">Accedi
-        </button>
-    </form>
-    <form th:action="@{/registration}" method="get">
-        <button class="btn btn-md btn-danger btn-block"
-                type="Submit">Registrati
-        </button>
-    </form>
-    <form th:action="@{/logout}" method="get">
-        <button class="btn btn-md btn-danger btn-block" 
-                type="Submit">Logout
-        </button>
-    </form>
                     <div class="col-lg-8 align-self-baseline">
                         <p class="text-white-75 font-weight-light mb-5">Inizia una partita collegandoti ad una lobby o creandone una!</p>
-                        <a class="btn btn-primary btn-xl js-scroll-trigger" href="game.html">GIOCA</a>
+                        <a class="btn btn-primary btn-xl js-scroll-trigger" th:href="@{/game}">GIOCA</a>
                     </div>
                 </div>
             </div>
