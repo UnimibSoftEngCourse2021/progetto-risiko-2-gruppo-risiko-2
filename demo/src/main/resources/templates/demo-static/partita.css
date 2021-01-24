@@ -1,0 +1,135 @@
+.on {
+	fill: white;
+	stroke-width: 5;
+	stroke: white;
+	animation: alertPulse 1s ease-out;
+	animation-iteration-count: infinite;
+	opacity: 10;
+	background: white;
+  }
+
+.state
+{
+  fill: red;
+  stroke: black;
+  stroke-width: 1;
+
+}
+
+.state:hover
+{
+  fill: white;
+  stroke-width: 1;
+
+}
+
+small {
+  color: #ccc;
+}
+
+#background-object {
+    width: 100%;
+    height: 100%;
+	object-fit: fill;
+}
+
+.container-left-bar{
+    width: 70%;
+    height: 100%;
+	float: left;
+	padding: 25px;
+
+}
+
+.container-right-bar{
+    width: 30%;
+	margin-top: 21px;
+    height: 95%;
+	float: right;
+	padding: 25 px;
+	background : rgba(242, 241, 239, 1);
+}
+
+
+path {
+  cursor: pointer;
+}
+
+
+/* Make the element pulse (grow large and small slowly) */
+/* Usage
+    .myElement {
+        animation: pulsate 1s ease-out;
+        animation-iteration-count: infinite;
+        opacity: 1;
+    }
+*/
+@-webkit-keyframes pulsate {
+    0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
+    50% {opacity: 1.0;}
+    100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
+}
+
+/* Make the element's opacity pulse*/
+/* Usage
+    .myElement {
+        animation: opacityPulse 1s ease-out;
+        animation-iteration-count: infinite;
+        opacity: 0;
+    }
+*/
+@-webkit-keyframes opacityPulse {
+    0% {opacity: 0.0;}
+    50% {opacity: 1.0;}
+    100% {opacity: 0.0;}
+}
+
+/* Make the element's background pulse. I call this alertPulse because it is red. You can call it something more generic. */
+/* Usage
+    .myElement {
+        animation: alertPulse 1s ease-out;
+        animation-iteration-count: infinite;
+        opacity: 1;
+    }
+*/
+@-webkit-keyframes alertPulse {
+    0%  { background-color: blue; opacity: 1; stroke-width: 2; }
+    50%  { opacity: red; opacity: 0.75; }
+    100% { opacity: white; opacity: 1; stroke-width: 6;}
+
+}
+
+
+/* Make the element rotate infinitely. */
+/*
+Usage
+    .myElement {
+        animation: rotating 3s linear infinite;
+    }
+*/
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+
+.svg{
+	object-fit: fill;
+	width: 70% auto;
+	height: 70% auto;
+	background-color: orange;
+}
+
+
