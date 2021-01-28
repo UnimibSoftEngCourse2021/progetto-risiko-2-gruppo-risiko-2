@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>DRisk - A RISK GAME</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+		<!-- Colyseus Lobby-->
+		<script type="text/javascript" src="https://unpkg.com/colyseus.js@^0.14.0/dist/colyseus.js"></script>
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+        <!-- Third party plugin CSS-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+			<script>
+		function bondItems() {
+				var giocatori = document.getElementById("nGiocatori");
+				var continenti = document.getElementById("nContinenti");
+				var territori = document.getElementById("nTerritori");
+				var confini = document.getElementById("nConfini");
+				var difficolta = document.getElementById("difficolta");
+					if (giocatori.options[giocatori.selectedIndex].text === "2"){
+						if (confirm("Attenzione, le impostazioni visualizzate sono quelle consigliate per il numero di giocatori scelti") == true) {
+								userPreference = "Ok, ho capito!";
+							} else {
+								userPreference = "Voglio modificare ancora!";
+							}
+						document.getElementById("nContinenti").value = "1";
+						document.getElementById("nTerritori").value = "7";
+						document.getElementById("nConfini").value = "15";
+						};
+				};
+				
+				
+				function Spiegazione() {
+					alert("Si può attaccare con un massimo di 3 armate per turno nella modalità Facile");
+					alert("Si può attaccare con un massimo di 2 armate per turno nella modalità Medio");	
+					alert("Si può attaccare con un massimo di 1 armate per turno nella modalità Difficile");		
+				};
+				
+				
+				//Parte creazione lobby system:
+				
+					var host = window.document.location.host.replace(/:.*/, '');
+
+					var client = new Colyseus.Client(location.protocol.replace("http", "ws") + "//" + host + (location.port ? ':' + location.port : ''));
+					var room;
+
+					var colors = ['red', 'green', 'yellow', 'blue', 'cyan', 'magenta'];
+					var players = {};
+
+					function create() {
+		
+						client.joinOrCreate('relay', {
+							name: document.getElementById('username').value
+						}).then(room_instance => {
+							room = room_instance
+
+							room.onLeave(() => console.log("Bye, bye."));
+
+							room.onMessage('move', ([sessionId, movement]) => {
+								local_move(sessionId, movement);
+							});
+
+							// listen to patches coming from the server
+							room.state.players.onAdd = function (player, sessionId) {
+								var dom = document.createElement("div");
+								dom.className = "player";
+								dom.style.left = "0px";
+								dom.style.top = "0px";
+								dom.style.background = colors[Math.floor(Math.random() * colors.length)];
+								dom.innerText = `${player.name || "[no name]"} (${sessionId})`;
+
+								players[sessionId] = dom;
+								document.body.appendChild(dom);
+							}
+
+							room.state.players.onRemove = function (player, sessionId) {
+								document.body.removeChild(players[sessionId]);
+								delete players[sessionId];
+							}
+
+							window.addEventListener("keydown", function (e) {
+								if (e.which === 38) {
+									up();
+
+								} else if (e.which === 39) {
+									right();
+
+								} else if (e.which === 40) {
+									down();
+
+								} else if (e.which === 37) {
+									left();
+								}
+							});
+
+						});
+					}
+
+					function leave() {
+						if (room) {
+							room.leave();
+						}
+					}
+
+					function local_move(sessionId, movement) {
+						var dom = players[sessionId];
+						if (movement.x) {
+							dom.style.left = parseInt(dom.style.left) + movement.x + "px";
+						}
+						if (movement.y) {
+							dom.style.top = parseInt(dom.style.top) + movement.y + "px";
+						}
+					}
+
+					function up () {
+						var movement = { y: -10 };
+
+						// move locally instantly
+						local_move(room.sessionId, movement);
+
+						room.send("move", movement);
+					}
+
+					function right () {
+						var movement = { x: 10 };
+
+						// move locally instantly
+						local_move(room.sessionId, movement);
+
+						room.send("move", movement);
+					}
+
+					function down () {
+						var movement = { y: 10 };
+
+						// move locally instantly
+						local_move(room.sessionId, movement);
+
+						room.send("move", movement);
+					}
+
+					function left () {
+						var movement = { x: -10 };
+
+						// move locally instantly
+						local_move(room.sessionId, movement);
+
+						room.send("move", movement);
+					}
+
+			</script>
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" href="/index.html">Home DRISK</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto my-2 my-lg-0">
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">Informazioni</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contatti</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container h-100">
+			<!-- TEST LOBBY USERNAME PROVVVISORIO-->		 <div id="username" value="prova"></div>
+                <div class="row h-100 align-items-center justify-content-center text-center">		
+					 <div class="form-style-6" id="menuConf">
+					 <form action="lobby.html">
+					 <label class="navbar-brand js-scroll-trigger">Scegli la tua configurazione</label><br><br>
+						<label for="nGiocatori">Numero di giocatori</label>
+						<select class="form-control" id="nGiocatori" onChange="bondItems()">
+						  <option>2</option>
+						  <option>3</option>
+						  <option>4</option>
+						  <option>5</option>
+						  <option>6</option>
+						</select>
+						<hr class="divider1" />
+						<label for="nContinenti">Numero di continenti</label>
+						<select class="form-control" id="nContinenti" onChange="bondItems()">
+						  <option>1</option>
+						  <option>2</option>
+						  <option>3</option>
+						  <option>4</option>
+						  <option>5</option>
+						  <option>6</option>
+						</select>
+						<hr class="divider1" />
+						<label for="nTerritori">Numero di territori</label>
+						<select class="form-control" id="nTerritori" onChange="bondItems()">
+						  <option>7</option>
+						  <option>14</option>
+						  <option>28</option>
+						  <option>34</option>
+						  <option>42</option>
+						</select>
+						<hr class="divider1" />
+						<label for="nTerritori">Numero di confini tra territori</label>
+						<select class="form-control" id="nConfini" onChange="bondItems()">
+						  <option>15</option>
+						  <option>26</option>
+						  <option>36</option>
+						  <option>42</option>
+						  <option>54</option>
+						  <option>80</option>
+						</select>
+						<hr class="divider1" />
+					  <label for="difficolta" onmouseover="Spiegazione()">Difficoltà</label><br>
+						  <input type="radio" id="facile" name="gender" value="facile">
+						  <label for="facile">Facile</label><br>
+						  <input type="radio" id="medio" name="gender" value="medio">
+						  <label for="medio" >Medio</label><br>
+						  <input type="radio" id="difficile" name="gender" value="difficile">
+						  <label for="difficile" >Difficile</label><br><br><br>
+						<input type="submit" value="Invia" onclick="create()"/>
+					</form>						
+					 </div>
+                </div>
+            </div>
+        </header>
+        <!-- About-->
+        <section class="page-section bg-primary" id="about">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="text-white mt-0">Progetto Universitario</h2>
+                        <hr class="divider light my-4" />
+                        <p class="text-white-50 mb-4">Informazioni utili</p>
+                        <a class="btn btn-light btn-xl js-scroll-trigger" href="#services">Visualizza</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Contact-->
+        <section class="page-section" id="contact">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="mt-0">Contattaci</h2>
+                        <hr class="divider my-4" />
+                        <p class="text-muted mb-5">Se hai problemi con la registrazione o di altro tipo contattaci come meglio preferisci!</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
+                        <i class="fas fa-phone fa-3x mb-3 text-muted"></i>
+                        <div>+1 (555) 123-4567</div>
+                    </div>
+                    <div class="col-lg-4 mr-auto text-center">
+                        <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
+                        <!-- Make sure to change the email address in BOTH the anchor text and the link target below!-->
+                        <a class="d-block" href="mailto:contact@yourwebsite.com">contact@yourwebsite.com</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="bg-light py-5">
+            <div class="container"><div class="small text-center text-muted">Copyright © 2020 - Start Bootstrap</div></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Third party plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
+</html>
