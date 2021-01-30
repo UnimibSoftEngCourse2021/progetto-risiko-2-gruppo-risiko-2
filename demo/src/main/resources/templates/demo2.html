@@ -1,0 +1,2447 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>DRisk - A RISK GAME</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.ico}"/>
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+        <!-- Third party plugin CSS-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link th:href="@{/css/styles.css}" rel="stylesheet" />
+		<link th:href="@{/css/mappa.css}" rel="stylesheet" />
+       	<script type="text/javascript" th:src="@{/js/standard_map.js}"></script>
+    </head>
+ <body id="page-top">
+   <script>
+   var stati = [];
+
+   var numGiocatori = 6;
+   //Settaggi mappa
+   // Mappa inizializzazione confini
+   //var data = eval(standard_confini);
+   console.log(data);
+   // Inizializzazione stati totali
+   function inizializzazioneStatiTotali(){
+     for(stato in stati_map_standard){
+       stati.push(stati_map_standard[stato]);
+     }
+   }
+
+   </script>
+        <!-- Navigation-->
+		<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+            <div class="container">
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav mr-auto my-2 my-lg-0">
+				<p class="navbar-brand js-scroll-trigger" id="numTurno">Turno: 1</p>
+				<p class="navbar-brand js-scroll-trigger" id="faseAttuale">Fase Attuale: Preparazione</p>
+                </ul>
+				<a class="navbar-brand js-scroll-trigger" th:href="@{/home}">Esci dalla partita</a>
+                </div>
+            </div>
+        </nav>
+        <!-- Masthead-->
+                <header class="masthead-game">
+        			  <div class="container-game-table">
+        				<div class="row h-10 align-items-center justify-content-center text-center">
+        					<h5 style="color:white;">Hai effetuato l'accesso come:  </h5><h5 style="padding-left:10px" class="text-success" th:utext="${session.user_name}"></h5>
+        				</div>
+                      <div class="row h-100 align-items-center justify-content-center text-center">
+         			  <div class="column-left-partita">
+	
+                        <p id ="infoMini"></p>
+                        <p id ="gameInfo"></p>
+
+                      </div>
+        			  <div class="column-middle-partita">
+        				<svg style="
+        				 border-radius: 25px;
+        				 border: 1 px solid white;
+        				 background: rgba(0,0,0,0.3);
+        				 padding: 6px auto;
+        				 height: 100%;"
+        				 xmlns:dc="http://purl.org/dc/elements/1.1/"
+        				 xmlns:cc="http://creativecommons.org/ns#"
+        				 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        				 xmlns:svg="http://www.w3.org/2000/svg"
+        				 xmlns="http://www.w3.org/2000/svg"
+        				 xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+        				 xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+        				 width="90%"
+        				 height="90%"
+        				 viewBox="20 -10 170 170"
+        				 version="1.1"
+        				 id="map1"
+        				 class="svgmap"
+        				 sodipodi:docname="d.svg"
+        				 inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+        				<sodipodi:namedview
+        				   pagecolor="#ffffff"
+        				   bordercolor="#666666"
+        				   borderopacity="1"
+        				   objecttolerance="10"
+        				   gridtolerance="10"
+        				   guidetolerance="10"
+        				   inkscape:pageopacity="0"
+        				   inkscape:pageshadow="2"
+        				   inkscape:window-width="1920"
+        				   inkscape:window-height="1001"
+        				   id="namedview987"
+        				   showgrid="false"
+        				   inkscape:zoom="1.4788159"
+        				   inkscape:cx="368.81096"
+        				   inkscape:cy="376.24285"
+        				   inkscape:window-x="-9"
+        				   inkscape:window-y="-9"
+        				   inkscape:window-maximized="1"
+        				   inkscape:current-layer="layer1" />
+        				<defs
+        				   id="defs2" />
+        				<metadata
+        				   id="metadata5">
+        				  <rdf:RDF>
+        					<cc:Work
+        					   rdf:about="">
+        					  <dc:format>image/svg+xml</dc:format>
+        					  <dc:type
+        						 rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        					  <dc:title />
+        					</cc:Work>
+        				  </rdf:RDF>
+        				</metadata>
+							<marker
+							   orient="auto"
+							   refY="0"
+							   refX="0"
+							   id="CurvyCross"
+							   style="overflow:visible">
+							  <g
+								 id="g3984"
+								 transform="scale(0.6,0.6)">
+								<path
+								   id="path3986"
+								   d="M 4.625493,-5.0456926 C 1.865493,-5.0456926 -0.37450702,-2.8056926 -0.37450702,-0.04569258 C -0.37450702,2.7143074 1.865493,4.9543074 4.625493,4.9543074"
+								   style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none" />
+								<path
+								   id="path3988"
+								   d="M -5.4129913,-5.0456926 C -2.6529913,-5.0456926 -0.41299131,-2.8056926 -0.41299131,-0.04569258 C -0.41299131,2.7143074 -2.6529913,4.9543074 -5.4129913,4.9543074"
+								   style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none" />
+							  </g>
+							</marker>
+							<marker
+							   orient="auto"
+							   refY="0"
+							   refX="0"
+							   id="DiamondMend"
+							   style="overflow:visible">
+							  <path
+								 id="path3894"
+								 d="M 0,-7.0710768 L -7.0710894,0 L 0,7.0710589 L 7.0710462,0 L 0,-7.0710768 z"
+								 style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+								 transform="matrix(0.4,0,0,0.4,-2.6,0)" />
+							</marker>
+							<marker
+							   orient="auto"
+							   refY="0"
+							   refX="0"
+							   id="EmptyTriangleOutL"
+							   style="overflow:visible">
+							  <path
+								 id="path3954"
+								 d="M 5.77,0 L -2.88,5 L -2.88,-5 L 5.77,0 z"
+								 style="fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+								 transform="matrix(0.8,0,0,0.8,-4.8,0)" />
+							</marker>
+							<marker
+							   orient="auto"
+							   refY="0"
+							   refX="0"
+							   id="Club"
+							   style="overflow:visible">
+							  <path
+								 id="path4023"
+								 d="M -1.5971367,-7.0977635 C -3.4863874,-7.0977635 -5.0235187,-5.5606321 -5.0235187,-3.6713813 C -5.0235187,-3.0147015 -4.7851656,-2.4444556 -4.4641095,-1.9232271 C -4.5028609,-1.8911157 -4.5437814,-1.8647646 -4.5806531,-1.8299921 C -5.2030765,-2.6849849 -6.1700514,-3.275133 -7.307773,-3.275133 C -9.1970245,-3.2751331 -10.734155,-1.7380016 -10.734155,0.15124914 C -10.734155,2.0404999 -9.1970245,3.5776313 -7.307773,3.5776313 C -6.3143268,3.5776313 -5.439154,3.1355702 -4.8137404,2.4588126 C -4.9384274,2.8137041 -5.0235187,3.1803 -5.0235187,3.5776313 C -5.0235187,5.4668819 -3.4863874,7.0040135 -1.5971367,7.0040135 C 0.29211394,7.0040135 1.8292454,5.4668819 1.8292454,3.5776313 C 1.8292454,2.7842354 1.5136868,2.0838028 1.0600576,1.503155 C 2.4152718,1.7663868 3.7718375,2.2973711 4.7661444,3.8340272 C 4.0279463,3.0958289 3.5540908,1.7534117 3.5540908,-0.058529361 L 2.9247554,-0.10514681 L 3.5074733,-0.12845553 C 3.5074733,-1.9403966 3.9580199,-3.2828138 4.6962183,-4.0210121 C 3.7371277,-2.5387813 2.4390549,-1.9946496 1.1299838,-1.7134486 C 1.5341802,-2.2753578 1.8292454,-2.9268556 1.8292454,-3.6713813 C 1.8292454,-5.5606319 0.29211394,-7.0977635 -1.5971367,-7.0977635 z"
+								 style="fill-rule:evenodd;stroke:#000000;stroke-width:0.74587913pt;marker-start:none"
+								 transform="scale(0.6,0.6)" />
+							</marker>
+							<marker
+							   orient="auto"
+							   refY="0"
+							   refX="0"
+							   id="Torso"
+							   style="overflow:visible">
+							  <g
+								 id="g4006"
+								 transform="scale(0.7,0.7)">
+								<path
+								   id="path4008"
+								   d="M -4.7792281,-3.239542 C -2.4288541,-2.8736027 0.52103922,-1.3019943 0.25792722,0.38794346 C -0.0051877922,2.0778819 -2.2126741,2.6176539 -4.5630471,2.2517169 C -6.9134221,1.8857769 -8.521035,0.75201414 -8.257922,-0.93792336 C -7.994809,-2.6278615 -7.1296041,-3.6054813 -4.7792281,-3.239542 z"
+								   style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:1.25;marker-start:none;marker-mid:none;marker-end:none" />
+								<path
+								   id="path4010"
+								   d="M 4.4598789,0.088665736 C -2.5564571,-4.378332 5.2248769,-3.9061806 -0.84829578,-8.7197331"
+								   style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-end:none" />
+								<path
+								   id="path4012"
+								   d="M 4.9298719,0.057520736 C -1.3872731,1.7494689 1.8027579,5.4782079 -4.9448731,7.5462725"
+								   style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none" />
+								<rect
+								   id="rect4014"
+								   transform="matrix(0.527536,-0.849533,0.887668,0.460484,0,0)"
+								   y="-1.7408575"
+								   x="-10.391706"
+								   height="2.7608147"
+								   width="2.6366582"
+								   style="fill-rule:evenodd;stroke-width:1pt;marker-end:none" />
+								<rect
+								   id="rect4016"
+								   transform="matrix(0.671205,-0.741272,0.790802,0.612072,0,0)"
+								   y="-7.9629307"
+								   x="4.9587269"
+								   height="2.8614161"
+								   width="2.7327356"
+								   style="fill-rule:evenodd;stroke-width:1pt;marker-end:none" />
+								<path
+								   id="path4018"
+								   transform="matrix(0,-1.109517,1.109517,0,25.96648,19.71619)"
+								   d="M 16.779951,-28.685045 A 0.60731727,0.60731727 0 1 1 15.565317,-28.685045 A 0.60731727,0.60731727 0 1 1 16.779951,-28.685045 z"
+								   style="fill:#ff0000;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none" />
+								<path
+								   id="path4020"
+								   transform="matrix(0,-1.109517,1.109517,0,26.8245,16.99126)"
+								   d="M 16.779951,-28.685045 A 0.60731727,0.60731727 0 1 1 15.565317,-28.685045 A 0.60731727,0.60731727 0 1 1 16.779951,-28.685045 z"
+								   style="fill:#ff0000;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none" />
+							  </g>
+							</marker>
+							<marker
+							   id="RazorWire"
+							   refX="0"
+							   refY="0"
+							   orient="auto">
+							   style=&quot;overflow:visible&quot;&gt;
+							  <path
+						   id="path4026"
+						   transform="scale(0.8,0.8)"
+						   style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.1pt"
+						   d="M 0.022727273,-0.74009011 L 0.022727273,0.69740989 L -7.7585227,3.0099099 L 10.678977,3.0099099 L 3.4914773,0.69740989 L 3.4914773,-0.74009011 L 10.741477,-2.8963401 L -7.7272727,-2.8963401 L 0.022727273,-0.74009011 z" />
+						</marker>
+							<marker
+							   style="overflow:visible"
+							   id="InfiniteLineStart"
+							   refX="0"
+							   refY="0"
+							   orient="auto">
+							  <g
+								 id="g4038"
+								 transform="translate(-13,0)">
+								<circle
+								   id="circle4040"
+								   r="0.80000001"
+								   cy="0"
+								   cx="3" />
+								<circle
+								   id="circle4042"
+								   r="0.80000001"
+								   cy="0"
+								   cx="6.5" />
+								<circle
+								   id="circle4044"
+								   r="0.80000001"
+								   cy="0"
+								   cx="10" />
+							  </g>
+							</marker>
+							<marker
+							   orient="auto"
+							   refY="0"
+							   refX="0"
+							   id="Scissors"
+							   style="overflow:visible">
+							  <path
+								 id="schere"
+								 style="marker-start:none"
+								 d="M 9.0898857,-3.6061018 C 8.1198849,-4.7769976 6.3697607,-4.7358294 5.0623558,-4.2327734 L -3.1500488,-1.1548705 C -5.5383421,-2.461584 -7.8983361,-2.0874077 -7.8983361,-2.7236578 C -7.8983361,-3.2209742 -7.4416699,-3.11198 -7.5100293,-4.4068519 C -7.5756648,-5.6501286 -8.8736064,-6.5699315 -10.100428,-6.4884954 C -11.327699,-6.49585 -12.599867,-5.5553341 -12.610769,-4.2584343 C -12.702194,-2.9520479 -11.60356,-1.7387447 -10.304005,-1.6532027 C -8.7816644,-1.4265411 -6.085747,-2.3487593 -4.82106,-0.082342643 C -5.7633447,1.6559151 -7.4350844,1.6607341 -8.9465707,1.5737277 C -10.201445,1.5014928 -11.708664,1.8611256 -12.307219,3.0945882 C -12.885586,4.2766744 -12.318421,5.9591904 -10.99047,6.3210002 C -9.6502788,6.8128279 -7.8098011,6.1912892 -7.4910978,4.650276 C -7.2454393,3.462453 -8.0864637,2.9043186 -7.7636052,2.4731223 C -7.5199917,2.1477623 -5.9728246,2.3362771 -3.2164999,1.0982979 L 5.6763468,4.2330688 C 6.8000164,4.5467672 8.1730685,4.5362646 9.1684433,3.4313614 L -0.05164093,-0.053722219 L 9.0898857,-3.6061018 z M -9.2179159,-5.5066058 C -7.9233569,-4.783806 -8.0290767,-2.8230356 -9.3743431,-2.4433169 C -10.590861,-2.0196559 -12.14537,-3.2022863 -11.757521,-4.5207817 C -11.530373,-5.6026336 -10.104134,-6.0014137 -9.2179159,-5.5066058 z M -9.1616516,2.5107591 C -7.8108215,3.0096239 -8.0402087,5.2951947 -9.4138723,5.6023681 C -10.324932,5.9187072 -11.627422,5.4635705 -11.719569,4.3902287 C -11.897178,3.0851737 -10.363484,1.9060805 -9.1616516,2.5107591 z" />
+							</marker>
+							<marker
+							   orient="auto"
+							   refY="0"
+							   refX="0"
+							   id="Arrow1Mend"
+							   style="overflow:visible">
+							  <path
+								 id="path3802"
+								 d="M 0,0 L 5,-5 L -12.5,0 L 5,5 L 0,0 z"
+								 style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+								 transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+							</marker>
+							<marker
+							   orient="auto"
+							   refY="0"
+							   refX="0"
+							   id="DotL"
+							   style="overflow:visible">
+							  <path
+								 id="path3855"
+								 d="M -2.5,-1 C -2.5,1.76 -4.74,4 -7.5,4 C -10.26,4 -12.5,1.76 -12.5,-1 C -12.5,-3.76 -10.26,-6 -7.5,-6 C -4.74,-6 -2.5,-3.76 -2.5,-1 z"
+								 style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
+								 transform="matrix(0.8,0,0,0.8,5.92,0.8)" />
+							</marker>
+							<marker
+							   orient="auto"
+							   refY="0"
+							   refX="0"
+							   id="Arrow1Lstart"
+							   style="overflow:visible">
+							  <path
+								 id="path3793"
+								 d="M 0,0 L 5,-5 L -12.5,0 L 5,5 L 0,0 z"
+								 style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+								 transform="matrix(0.8,0,0,0.8,10,0)" />
+							</marker>
+							<linearGradient
+							   id="linearGradient10542">
+							  <stop
+								 style="stop-color:#810000;stop-opacity:1;"
+								 offset="0"
+								 id="stop10544" />
+							  <stop
+								 style="stop-color:#810000;stop-opacity:0;"
+								 offset="1"
+								 id="stop10546" />
+							</linearGradient>
+							<linearGradient
+							   id="linearGradient10534">
+							  <stop
+								 id="stop10536"
+								 offset="0"
+								 style="stop-color:#000000;stop-opacity:1;" />
+							  <stop
+								 id="stop10538"
+								 offset="1"
+								 style="stop-color:#000000;stop-opacity:0;" />
+							</linearGradient>
+							<linearGradient
+							   id="linearGradient10318">
+							  <stop
+								 style="stop-color:#810000;stop-opacity:1"
+								 offset="0"
+								 id="stop10320" />
+							  <stop
+								 style="stop-color:#000000;stop-opacity:0;"
+								 offset="1"
+								 id="stop10322" />
+							</linearGradient>
+							<filter
+							   id="filter7968"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur7970" />
+							</filter>
+							<filter
+							   id="filter7972">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur7974" />
+							</filter>
+							<filter
+							   id="filter7976"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur7978" />
+							</filter>
+							<filter
+							   id="filter7980">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur7982" />
+							</filter>
+							<filter
+							   id="filter7984"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur7986" />
+							</filter>
+							<filter
+							   id="filter7988"
+							   x="-0.52651685"
+							   width="2.0530336"
+							   y="-0.01867081"
+							   height="1.0373416">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur7990" />
+							</filter>
+							<filter
+							   id="filter7992"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur7994" />
+							</filter>
+							<filter
+							   id="filter7996">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur7998" />
+							</filter>
+							<filter
+							   id="filter8000"
+							   x="-0.01766835"
+							   width="1.0353367"
+							   y="-0.10530337"
+							   height="1.2106067">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8002" />
+							</filter>
+							<filter
+							   id="filter8004"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8006" />
+							</filter>
+							<filter
+							   id="filter8008">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8010" />
+							</filter>
+							<filter
+							   id="filter8012"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8014" />
+							</filter>
+							<filter
+							   id="filter8016"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8018" />
+							</filter>
+							<filter
+							   id="filter8020"
+							   x="-0.27261341"
+							   width="1.5452268"
+							   y="-0.034264181"
+							   height="1.0685284">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8022" />
+							</filter>
+							<filter
+							   id="filter8024"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8026" />
+							</filter>
+							<filter
+							   id="filter8028"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8030" />
+							</filter>
+							<filter
+							   id="filter8032">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8034" />
+							</filter>
+							<filter
+							   id="filter8036"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8038" />
+							</filter>
+							<filter
+							   id="filter8040"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8042" />
+							</filter>
+							<filter
+							   id="filter8044">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8046" />
+							</filter>
+							<filter
+							   id="filter8048"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8050" />
+							</filter>
+							<filter
+							   id="filter8052"
+							   x="-0.033343554"
+							   width="1.0666871"
+							   y="-0.12991767"
+							   height="1.2598352">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8054" />
+							</filter>
+							<filter
+							   id="filter8056"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8058" />
+							</filter>
+							<filter
+							   id="filter8060">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8062" />
+							</filter>
+							<filter
+							   id="filter8064"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8066" />
+							</filter>
+							<filter
+							   id="filter8068"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8070" />
+							</filter>
+							<filter
+							   id="filter8072">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8074" />
+							</filter>
+							<filter
+							   id="filter8076"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8078" />
+							</filter>
+							<filter
+							   id="filter8080">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8082" />
+							</filter>
+							<filter
+							   id="filter8084"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8086" />
+							</filter>
+							<filter
+							   id="filter8088">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8090" />
+							</filter>
+							<filter
+							   id="filter8092"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8094" />
+							</filter>
+							<filter
+							   id="filter8096"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8098" />
+							</filter>
+							<filter
+							   id="filter8100">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8102" />
+							</filter>
+							<filter
+							   id="filter8104"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8106" />
+							</filter>
+							<filter
+							   id="filter8108"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8110" />
+							</filter>
+							<filter
+							   id="filter8112">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8114" />
+							</filter>
+							<filter
+							   id="filter8116"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8118" />
+							</filter>
+							<filter
+							   id="filter8120"
+							   x="-0.019839602"
+							   width="1.0396792"
+							   y="-0.10441293"
+							   height="1.2088259">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8122" />
+							</filter>
+							<filter
+							   id="filter8124"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8126" />
+							</filter>
+							<filter
+							   id="filter8128"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8130" />
+							</filter>
+							<filter
+							   id="filter8132"
+							   x="-0.38553455"
+							   width="1.771069"
+							   y="-0.013506053"
+							   height="1.0270121">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8134" />
+							</filter>
+							<filter
+							   id="filter8136"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8138" />
+							</filter>
+							<filter
+							   id="filter8140">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8142" />
+							</filter>
+							<filter
+							   id="filter8144"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8146" />
+							</filter>
+							<filter
+							   id="filter8148"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8150" />
+							</filter>
+							<filter
+							   id="filter8152">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8154" />
+							</filter>
+							<filter
+							   id="filter8156"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8158" />
+							</filter>
+							<filter
+							   id="filter8160">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8162" />
+							</filter>
+							<filter
+							   id="filter8164"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8166" />
+							</filter>
+							<filter
+							   id="filter8168">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8170" />
+							</filter>
+							<filter
+							   id="filter8172"
+							   x="-0.21938202"
+							   width="1.438764"
+							   y="-0.21938202"
+							   height="1.438764">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8174" />
+							</filter>
+							<filter
+							   id="filter8176"
+							   x="-0.033951707"
+							   width="1.0679034"
+							   y="-0.65814602"
+							   height="2.316292">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8178" />
+							</filter>
+							<filter
+							   id="filter8180"
+							   x="-0.014677452"
+							   width="1.0293549"
+							   y="-0.48623338"
+							   height="1.9724668">
+							  <feGaussianBlur
+								 stdDeviation="0.27422752"
+								 id="feGaussianBlur8182" />
+							</filter>
+							<filter
+							   id="filter11175">
+							  <feGaussianBlur
+								 stdDeviation="1.167282"
+								 id="feGaussianBlur11177" />
+							</filter>
+							<filter
+							   id="filter11217">
+							  <feGaussianBlur
+								 stdDeviation="1.7829898"
+								 id="feGaussianBlur11219" />
+							</filter>
+							<filter
+							   id="filter11297">
+							  <feGaussianBlur
+								 stdDeviation="0.79012187"
+								 id="feGaussianBlur11299" />
+							</filter>
+							<filter
+							   id="filter11377">
+							  <feGaussianBlur
+								 stdDeviation="1.1712674"
+								 id="feGaussianBlur11379" />
+							</filter>
+							<filter
+							   id="filter11461">
+							  <feGaussianBlur
+								 stdDeviation="0.52388934"
+								 id="feGaussianBlur11463" />
+							</filter>
+							<filter
+							   id="filter11563">
+							  <feGaussianBlur
+								 stdDeviation="0.85218102"
+								 id="feGaussianBlur11565" />
+							</filter>
+							<filter
+							   id="filter11579">
+							  <feGaussianBlur
+								 stdDeviation="0.76360116"
+								 id="feGaussianBlur11581" />
+							</filter>
+							<filter
+							   id="filter11627">
+							  <feGaussianBlur
+								 stdDeviation="0.1733297"
+								 id="feGaussianBlur11629" />
+							</filter>
+							<filter
+							   id="filter11747">
+							  <feGaussianBlur
+								 stdDeviation="0.77754127"
+								 id="feGaussianBlur11749" />
+							</filter>
+							<filter
+							   id="filter11855">
+							  <feGaussianBlur
+								 stdDeviation="0.66894465"
+								 id="feGaussianBlur11857" />
+							</filter>
+							<filter
+							   id="filter12053"
+							   x="-0.034717742"
+							   width="1.0694355"
+							   y="-0.16138707"
+							   height="1.3227741">
+							  <feGaussianBlur
+								 stdDeviation="0.32582008"
+								 id="feGaussianBlur12055" />
+							</filter>
+							<filter
+							   id="filter12290">
+							  <feGaussianBlur
+								 stdDeviation="0.44685758"
+								 id="feGaussianBlur12292" />
+							</filter>
+							<filter
+							   id="filter12358">
+							  <feGaussianBlur
+								 stdDeviation="0.39450509"
+								 id="feGaussianBlur12360" />
+							</filter>
+							<filter
+							   id="filter12362">
+							  <feGaussianBlur
+								 stdDeviation="0.39450509"
+								 id="feGaussianBlur12364" />
+							</filter>
+							<filter
+							   id="filter12418">
+							  <feGaussianBlur
+								 stdDeviation="1.0365519"
+								 id="feGaussianBlur12420" />
+							</filter>
+							<filter
+							   id="filter12450">
+							  <feGaussianBlur
+								 stdDeviation="0.75459375"
+								 id="feGaussianBlur12452" />
+							</filter>
+							<filter
+							   id="filter12466">
+							  <feGaussianBlur
+								 stdDeviation="1.327387"
+								 id="feGaussianBlur12468" />
+							</filter>
+							<filter
+							   id="filter12863">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12865" />
+							</filter>
+							<filter
+							   id="filter12867">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12869" />
+							</filter>
+							<filter
+							   id="filter12871">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12873" />
+							</filter>
+							<filter
+							   id="filter12875">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12877" />
+							</filter>
+							<filter
+							   id="filter12879">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12881" />
+							</filter>
+							<filter
+							   id="filter12883">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12885" />
+							</filter>
+							<filter
+							   id="filter12887">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12889" />
+							</filter>
+							<filter
+							   id="filter12891">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12893" />
+							</filter>
+							<filter
+							   id="filter12895">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12897" />
+							</filter>
+							<filter
+							   id="filter12899">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12901" />
+							</filter>
+							<filter
+							   id="filter12903">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12905" />
+							</filter>
+							<filter
+							   id="filter12907">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12909" />
+							</filter>
+							<filter
+							   id="filter12911">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12913" />
+							</filter>
+							<filter
+							   id="filter12915">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12917" />
+							</filter>
+							<filter
+							   id="filter12919">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12921" />
+							</filter>
+							<filter
+							   id="filter12923">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12925" />
+							</filter>
+							<filter
+							   id="filter12927">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12929" />
+							</filter>
+							<filter
+							   id="filter12931">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12933" />
+							</filter>
+							<filter
+							   id="filter12935">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12937" />
+							</filter>
+							<filter
+							   id="filter12939">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12941" />
+							</filter>
+							<filter
+							   id="filter12943">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12945" />
+							</filter>
+							<filter
+							   id="filter12947">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12949" />
+							</filter>
+							<filter
+							   id="filter12951">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12953" />
+							</filter>
+							<filter
+							   id="filter12955">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12957" />
+							</filter>
+							<filter
+							   id="filter12959">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12961" />
+							</filter>
+							<filter
+							   id="filter12963">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12965" />
+							</filter>
+							<filter
+							   id="filter12967">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12969" />
+							</filter>
+							<filter
+							   id="filter12971">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12973" />
+							</filter>
+							<filter
+							   id="filter12975">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12977" />
+							</filter>
+							<filter
+							   id="filter12979">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12981" />
+							</filter>
+							<filter
+							   id="filter12983">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12985" />
+							</filter>
+							<filter
+							   id="filter12987">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12989" />
+							</filter>
+							<filter
+							   id="filter12991">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12993" />
+							</filter>
+							<filter
+							   id="filter12995">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur12997" />
+							</filter>
+							<filter
+							   id="filter12999">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur13001" />
+							</filter>
+							<filter
+							   id="filter13003">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur13005" />
+							</filter>
+							<filter
+							   id="filter13007">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur13009" />
+							</filter>
+							<filter
+							   id="filter13011">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur13013" />
+							</filter>
+							<filter
+							   id="filter13015">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur13017" />
+							</filter>
+							<filter
+							   id="filter13019">
+							  <feGaussianBlur
+								 stdDeviation="0.5805759"
+								 id="feGaussianBlur13021" />
+							</filter>
+							<filter
+							   id="filter14319">
+							  <feGaussianBlur
+								 stdDeviation="0.21894252"
+								 id="feGaussianBlur14321" />
+							</filter>
+						  </defs>
+						  <sodipodi:namedview
+							 id="base"
+							 pagecolor="#ffffff"
+							 bordercolor="#666666"
+							 borderopacity="1.0"
+							 inkscape:pageopacity="0.0"
+							 inkscape:pageshadow="2"
+							 inkscape:zoom="0.35"
+							 inkscape:cx="400"
+							 inkscape:cy="560"
+							 inkscape:document-units="mm"
+							 inkscape:current-layer="layer1"
+							 inkscape:document-rotation="0"
+							 showgrid="false"
+							 inkscape:window-width="1920"
+							 inkscape:window-height="1001"
+							 inkscape:window-x="-9"
+							 inkscape:window-y="-9"
+							 inkscape:window-maximized="1" />
+						  <metadata
+							 id="metadata5">
+							<rdf:RDF>
+							  <cc:Work
+								 rdf:about="">
+								<dc:format>image/svg+xml</dc:format>
+								<dc:type
+								   rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+								<dc:title></dc:title>
+							  </cc:Work>
+							</rdf:RDF>
+						  </metadata>
+						  <g
+							 inkscape:label="Livello 1"
+							 inkscape:groupmode="layer"
+							 id="layer1">
+							<g
+							   inkscape:label="Livello 1"
+							   id="layer1-6"
+							   transform="matrix(0.92574796,0,0,1.0314825,7.5970799,-26.462358)">
+							  <g
+								 id="g2692"
+								 transform="matrix(0.21894403,0,0,0.21222575,-6.6909081,31.391026)">
+								<g
+								   id="map"
+								   visibility="visible"
+								   fill="none"
+								   stroke-width="1.5">
+								  <map:country
+									 name="East Africa"
+									 index="1"
+									 continent="africa"
+									 d="M532 514c-1,-6 -1,-12 -2,-17 5,-1 6,-8 7,-12 1,0 2,0 4,0 1,-8 11,-8 10,-19 -5,-1 -10,-2 -16,-2 0,-2 -1,-4 -2,-6 0,1 -1,2 -2,3 -7,-10 -12,-18 -16,-29 -1,-14 2,-24 4,-37 0,-1 0,-3 0,-4 1,0 2,0 4,0 -1,-3 -1,-3 1,-9 11,0 22,0 33,0 2,-3 2,-3 5,-4 7,11 9,26 14,38 1,1 2,1 3,1 2,5 3,9 5,14 -1,0 -2,0 -3,0 9,6 21,1 30,-1 0,0 0,1 1,2 -4,12 -9,23 -16,34 -15,12 -22,25 -33,39 0,7 0,14 1,21 -6,1 -11,2 -16,4 -2,6 -2,16 -2,18 -2,-1 -3,-1 -5,-1 0,-7 0,-15 0,-23 -2,-3 -5,-7 -7,-10 -1,0 -2,0 -2,0z" />
+
+								  <g
+									 id="Africa"
+									 stroke="#c68a31"
+									 fill="#cea252"
+									 visibility="visible">
+									<path
+									   class="state"
+									   id="east_africa"
+									   d="m 532,514 c -1,-6 -1,-12 -2,-17 5,-1 6,-8 7,-12 1,0 2,0 4,0 1,-8 11,-8 10,-19 -5,-1 -10,-2 -16,-2 0,-2 -1,-4 -2,-6 0,1 -1,2 -2,3 -7,-10 -12,-18 -16,-29 -1,-14 2,-24 4,-37 0,-1 0,-3 0,-4 1,0 2,0 4,0 -1,-3 -1,-3 1,-9 11,0 22,0 33,0 2,-3 2,-3 5,-4 7,11 9,26 14,38 1,1 2,1 3,1 2,5 3,9 5,14 -1,0 -2,0 -3,0 9,6 21,1 30,-1 0,0 0,1 1,2 -4,12 -9,23 -16,34 -15,12 -22,25 -33,39 0,7 0,14 1,21 -6,1 -11,2 -16,4 -2,6 -2,16 -2,18 -2,-1 -3,-1 -5,-1 0,-7 0,-15 0,-23 -2,-3 -5,-7 -7,-10 -1,0 -2,0 -2,0 z" />
+									<path
+									   class="state"
+									   id="egypt"
+									   d="m 484,328 c 8,2 15,10 23,9 0,-4 0,-4 1,-7 12,-3 24,4 35,8 5,0 9,0 14,0 1,5 3,10 4,15 -2,0 -4,-1 -6,-1 2,9 5,17 7,26 -3,1 -3,1 -5,4 -11,0 -22,0 -33,0 -2,6 -2,6 -1,9 -2,0 -3,0 -4,0 0,1 0,3 0,4 -7,-2 -8,-7 -15,-9 0,-2 -1,-4 -2,-6 -12,-2 -19,-3 -28,-11 -1,-11 0,-19 -1,-29 1,-1 2,-1 2,-2 1,-2 1,-4 1,-7 4,-3 4,-3 8,-3 z" />
+									<path
+									   class="state"
+									   id="congo"
+									   d="m 473,502 c -5,-6 -11,-12 -11,-20 4,-3 4,-4 6,-9 2,0 4,0 6,0 0,-1 0,-2 0,-3 9,2 9,2 13,2 1,-8 2,-13 0,-20 4,-2 5,-5 10,-7 1,-1 1,-2 1,-4 7,-1 11,-5 17,-9 4,11 9,19 16,29 1,-1 2,-2 2,-3 1,2 2,4 2,6 6,0 11,1 16,2 1,11 -9,11 -10,19 -2,0 -3,0 -4,0 -1,4 -2,11 -7,12 1,5 1,11 2,17 -1,2 -2,3 -3,5 -1,0 -2,0 -3,0 1,5 1,11 2,16 -2,0 -3,0 -4,0 0,-1 0,-3 0,-4 -23,-5 -15,-2 -21,-20 -2,0 -4,-1 -6,-1 0,1 -1,2 -1,3 -1,0 -3,0 -4,1 -1,-4 -1,-4 -4,-9 -8,-1 -9,-2 -15,-3 z" />
+									<path
+									   class="state"
+									   id="madagascar"
+									   d="m 579,589 c -5,-6 -4,-15 -1,-22 0,0 1,0 2,0 2,-15 1,-16 14,-21 6,-5 6,-5 7,-8 1,0 2,0 3,0 0,5 0,11 0,17 0,0 -1,0 -2,0 0,1 0,2 0,4 -1,0 -2,0 -3,0 -1,11 -9,26 -20,30 z" />
+									<path
+									   class="state"
+									   id="south_africa"
+									   d="m 473,502 c 6,1 7,2 15,3 3,5 3,5 4,9 1,-1 3,-1 4,-1 0,-1 1,-2 1,-3 2,0 4,1 6,1 6,18 -2,15 21,20 0,1 0,3 0,4 1,0 2,0 4,0 -1,-5 -1,-11 -2,-16 1,0 2,0 3,0 1,-2 2,-3 3,-5 0,0 1,0 2,0 2,3 5,7 7,10 0,8 0,16 0,23 2,0 3,0 5,1 0,-2 0,-12 2,-18 5,-2 10,-3 16,-4 0,13 2,29 -13,33 -1,2 -1,2 -6,7 -1,9 0,19 -10,22 -2,13 -2,13 -3,18 -1,0 -2,0 -3,0 0,1 0,2 0,3 -1,0 -2,0 -3,0 -7,18 -20,18 -39,22 -2,-1 -4,-2 -5,-2 0,-2 0,-3 0,-4 0,0 1,0 2,0 0,-10 -1,-15 -6,-24 -1,-9 -2,-12 -5,-30 -4,-11 -8,-21 -2,-31 1,0 3,-1 4,-1 0,-8 -1,-16 -1,-24 1,0 2,-1 3,-1 0,-3 0,-7 -1,-11 -1,0 -2,0 -3,0 0,0 0,-1 0,-1 z" />
+									<path
+									   class="state"
+									   id="north_africa"
+									   d="m 468,473 c -1,-4 -1,-6 0,-10 -7,-3 -7,-3 -13,-3 -2,-6 -2,-6 -4,-7 -5,0 -9,1 -14,1 0,1 0,2 0,3 -16,-1 -25,7 -36,-8 -6,-2 -10,-16 -12,-22 0,0 -1,0 -2,0 0,-1 0,-2 0,-3 -1,0 -2,0 -3,0 -2,-9 -2,-16 1,-25 0,-9 -1,-19 2,-28 5,-1 8,-15 10,-20 13,-6 13,-10 17,-25 7,-4 9,-7 14,-14 0,0 1,0 1,0 7,5 16,-1 23,-4 7,0 10,-1 28,-2 0,2 0,3 0,4 -1,1 -1,1 -2,1 2,3 1,6 1,10 -1,0 -3,0 -4,0 0,1 0,1 3,1 0,1 0,2 0,3 2,1 4,2 6,3 -4,0 -4,0 -8,3 0,3 0,5 -1,7 0,1 -1,1 -2,2 1,10 0,18 1,29 9,8 16,9 28,11 1,2 2,4 2,6 7,2 8,7 15,9 -2,13 -5,23 -4,37 -6,4 -10,8 -17,9 0,2 0,3 -1,4 -5,2 -6,5 -10,7 2,7 1,12 0,20 -4,0 -4,0 -13,-2 0,1 0,2 0,3 -2,0 -4,0 -6,0 z" />
+								  </g>
+								  <g
+									 id="Asia"
+									 stroke="#9cc35a"
+									 fill="#bddb8c"
+									 visibility="visible">
+									<path
+									   class="state"
+									   id="afghanistan"
+									   d="m 651,310 c -3,-4 -4,-5 -8,-7 -3,-8 -10,-4 -17,-3 0,-3 0,-5 -1,-7 -1,0 -2,-1 -3,-1 0,-3 0,-5 0,-8 1,0 2,-1 3,-1 0,-3 0,-6 0,-10 -1,0 -2,0 -3,0 1,4 1,4 0,7 -2,-1 -2,-1 -2,-9 -2,-1 -4,-2 -7,-3 1,-6 2,-7 5,-12 0,1 0,2 1,3 0,0 1,0 2,0 0,-3 0,-6 0,-9 -7,0 -11,1 -18,5 4,-14 -7,-21 0,-33 8,-5 22,-6 31,-7 0,1 1,2 1,3 11,-1 14,1 25,-6 0,-2 -1,-15 0,-15 10,0 21,-4 27,7 4,1 15,15 18,19 12,-1 10,9 15,16 -4,4 -5,5 -7,11 -11,3 -5,14 -16,18 0,1 0,2 0,3 -4,1 -7,1 -11,2 0,7 5,19 7,26 -3,1 -5,3 -7,5 -2,-3 -3,-5 -6,-5 0,-1 0,-2 0,-3 -5,-1 -7,-1 -9,4 -6,-1 -8,-1 -11,5 -3,1 -3,1 -9,5 z" />
+									<path
+									   class="state"
+									   id="india"
+									   d="m 713,452 c -1,-1 -2,-3 -4,-4 0,-3 1,-7 1,-10 1,0 2,0 4,0 3,5 4,6 4,11 -2,1 -3,2 -5,3 z m -57,-89 c 0,-6 3,-10 4,-16 -1,0 -2,0 -3,0 -1,-6 -3,-13 -4,-19 -1,-1 -2,-1 -3,-1 0,-6 0,-11 1,-17 6,-4 6,-4 9,-5 3,-6 5,-6 11,-5 2,-5 4,-5 9,-4 0,1 0,2 0,3 3,0 4,2 6,5 2,-2 4,-4 7,-5 2,0 5,0 7,0 1,6 4,6 10,7 0,5 0,11 0,16 -2,0 -3,0 -4,0 0,2 0,3 0,4 7,1 21,10 25,14 4,0 7,1 10,1 0,2 0,3 -1,5 3,0 5,-1 8,-1 0,-1 0,-2 0,-3 2,0 5,-1 8,-1 -1,-2 -1,-3 -1,-5 6,-2 8,-7 13,-8 1,2 2,5 3,8 -3,5 -3,7 -4,13 -1,0 -2,0 -2,0 0,3 0,3 -1,7 -1,0 -2,0 -3,1 -2,4 -3,8 -4,12 -7,4 -12,6 -20,7 -3,7 -13,25 -19,27 -1,11 -5,21 -6,32 -2,0 -3,0 -5,0 0,1 0,2 1,3 -1,1 -2,2 -3,3 -1,0 -3,0 -4,0 -5,-13 -10,-26 -15,-39 0,-15 0,-15 -1,-17 2,-5 2,-5 1,-7 0,2 -1,3 -2,4 -4,0 -8,-1 -9,-5 1,-1 2,-2 4,-2 -2,-1 -3,-2 -4,-2 -1,-1 -1,-2 -1,-3 -4,-1 -4,-3 -5,-7 -5,0 -9,0 -13,0 z" />
+									<path
+									   class="state"
+									   id="irkutsk"
+									   d="m 786,217 c -11,-10 -5,-34 3,-45 5,-3 5,-3 8,-6 3,0 7,-1 11,-2 2,-2 3,-5 5,-7 8,0 10,-2 29,-1 0,0 0,1 1,2 2,1 5,1 8,1 2,6 3,6 8,9 -1,10 -5,20 -6,30 -4,0 -9,2 -12,-1 -2,1 -4,2 -5,3 0,4 1,8 -4,9 0,5 -1,8 -3,13 -1,0 -2,0 -3,0 0,-2 -1,-4 -1,-7 -4,1 -4,1 -11,5 -9,-1 -19,0 -28,-3 z" />
+									<path
+									   class="state"
+									   id="kamchatka"
+									   d="m 853,198 c 1,-10 5,-20 6,-30 3,-11 12,-13 14,-24 3,0 5,-1 7,-1 0,-1 1,-2 1,-3 3,-1 5,-2 8,-2 1,1 1,3 2,5 2,1 4,1 6,2 0,1 0,2 1,3 2,-1 4,-2 6,-2 1,-3 2,-5 3,-7 1,0 2,0 4,0 0,-3 0,-6 0,-8 -3,-1 -6,-1 -8,-2 0,-3 1,-7 1,-10 7,-3 12,-7 19,-8 1,-2 2,-4 3,-5 1,-1 2,-1 3,-1 0,-1 0,-2 1,-3 4,0 24,8 28,4 -1,0 -3,0 -4,0 0,-1 0,-2 0,-3 -1,0 -2,0 -3,0 0,-1 0,-2 0,-3 6,0 12,0 18,0 1,2 1,3 1,4 2,-1 2,-1 6,-2 -1,1 -1,1 -2,2 2,1 2,1 7,1 8,5 8,5 11,6 2,4 4,5 7,8 0,-1 1,-2 1,-3 4,2 4,2 9,8 1,-1 2,-1 4,-1 -2,4 -2,4 -3,9 -1,0 -3,-1 -5,-1 0,1 0,2 0,2 1,1 3,1 4,1 -1,1 -1,1 -9,1 -2,-1 -2,-1 -2,-5 -1,0 -2,0 -3,-1 0,0 0,-1 0,-2 -3,0 -5,1 -8,1 0,-2 -1,-4 -2,-6 0,3 0,6 0,9 -3,0 -5,0 -8,0 0,1 0,2 0,2 2,1 4,1 6,1 0,2 -1,4 -1,6 1,0 2,0 3,0 0,2 0,4 0,5 -2,0 -4,0 -5,0 -1,-1 -1,-1 -1,-2 -5,3 -11,10 -14,15 -7,-1 -8,-2 -14,1 -1,-1 -2,-3 -3,-4 -1,1 -3,2 -4,4 1,0 2,0 2,1 0,3 -4,3 -4,5 1,0 2,0 3,0 -1,3 -2,5 -3,8 1,0 2,0 3,0 0,6 0,10 -5,12 0,7 -1,9 -4,16 -1,0 -2,1 -2,1 -4,-5 -7,-11 -10,-16 -2,-22 13,-23 19,-40 1,0 2,-1 3,-1 -3,0 -4,0 -7,2 0,1 0,1 1,2 -2,2 -4,4 -5,7 -2,0 -4,0 -5,0 -1,-2 -1,-4 -1,-6 -3,1 -6,1 -9,2 -1,3 -1,3 -2,8 1,0 2,1 3,1 0,1 0,2 0,3 -12,0 -40,-6 -44,6 -5,2 -8,8 -11,13 3,1 7,2 10,3 0,1 0,2 1,3 0,-1 1,-3 1,-4 2,0 4,0 6,1 6,13 7,28 5,43 -3,-2 -5,-3 -8,-4 0,-2 -1,-3 -1,-5 -1,0 -3,0 -4,-1 0,-1 0,-1 0,-2 -3,0 -6,0 -9,0 -3,-9 -10,-8 -12,-18 0,0 -1,-1 -2,-1 z M 962,99 c -1,0 -2,-1 -3,-1 0,-1 1,-2 1,-3 3,-2 3,-2 7,-2 -2,2 -2,2 -3,6 -1,0 -2,0 -2,0 z" />
+									<path
+									   class="state"
+									   id="middle_east"
+									   d="m 548,321 c 0,-1 -1,-3 -1,-4 4,-2 6,-2 10,-2 -3,4 -4,5 -9,6 z m 15,32 c -1,-5 -3,-10 -4,-15 7,-8 4,-17 6,-28 -1,0 -1,-1 -2,-1 -3,2 -3,2 -11,3 0,0 -1,-1 -2,-2 -3,1 -6,2 -9,3 0,-1 -1,-2 -1,-3 -1,1 -3,1 -5,1 -2,-10 -5,-15 -5,-21 8,-15 0,0 8,-15 2,2 3,4 5,6 3,0 6,0 8,0 0,-1 0,-2 0,-3 9,0 15,-3 20,4 2,-1 6,0 14,-2 1,1 1,1 5,3 1,2 1,4 1,6 2,0 3,0 4,0 1,2 3,5 4,7 4,0 4,0 9,-2 1,8 1,8 2,11 7,1 11,2 17,0 0,-1 0,-3 0,-4 7,-1 13,-5 16,3 4,2 5,3 8,7 -1,6 -1,11 -1,16 1,0 2,0 3,1 1,6 3,13 4,19 1,0 2,0 3,0 -1,6 -4,10 -4,16 -5,1 -11,1 -16,2 0,-2 0,-4 0,-6 -2,0 -6,1 -15,0 -1,-1 -1,-2 -1,-3 -2,0 -3,0 -4,-1 -4,-12 -3,-15 -15,-12 0,4 2,6 4,10 1,0 2,0 3,0 2,4 4,8 6,12 1,-2 2,-3 3,-4 3,2 0,6 0,9 1,1 2,1 3,2 4,-3 8,-6 13,-10 3,8 7,9 10,15 -1,4 -3,7 -5,10 0,0 -1,-1 -1,-1 -1,3 -1,6 -2,9 -1,1 -3,1 -4,1 -4,14 -34,22 -45,26 0,-16 -6,-29 -16,-42 0,-9 -7,-18 -11,-27 z" />
+									<path
+									   class="state"
+									   id="mongolia"
+									   d="m 836,271 c -7,-10 -24,-9 -34,-11 0,-3 0,-6 0,-9 -3,0 -5,-1 -8,-1 -3,-7 -3,-12 -8,-18 0,-2 0,-3 1,-4 -2,-4 -1,-7 -1,-11 9,3 19,2 28,3 7,-4 7,-4 11,-5 0,3 1,5 1,7 1,0 2,0 3,0 2,-5 3,-8 3,-13 5,-1 4,-5 4,-9 1,-1 3,-2 5,-3 3,3 8,1 12,1 1,0 2,1 2,1 2,10 9,9 12,18 3,0 6,0 9,0 0,1 0,1 0,2 1,1 3,1 4,1 0,2 1,3 1,5 3,1 5,2 8,4 -4,5 -8,11 -11,17 -2,0 -3,0 -5,0 0,0 -1,-1 -1,-1 -4,6 -4,10 -9,15 0,1 0,2 0,3 6,3 11,10 11,17 -4,3 -6,5 -11,5 1,-5 1,-6 -2,-10 0,1 -1,1 -1,2 -2,-3 -3,-3 -2,-7 -5,0 -8,0 -12,2 0,-5 1,-5 -1,-9 -3,2 -5,5 -9,8 z" />
+									<path
+									   class="state"
+									   id="siam"
+									   d="m 757,369 c 1,-4 2,-8 4,-12 1,-1 2,-1 3,-1 1,-4 1,-4 1,-7 0,0 1,0 2,0 1,-6 1,-8 4,-13 2,-1 3,-2 5,-2 3,8 3,9 0,16 1,0 3,0 4,0 0,1 0,2 0,3 1,-1 2,-1 2,-1 6,-10 14,-14 20,-3 -3,1 -5,3 -7,5 0,2 -1,5 -1,8 2,0 3,1 5,1 0,2 1,3 1,4 1,1 2,1 3,2 0,0 0,1 0,2 1,0 2,0 3,0 0,9 0,14 -3,21 -2,0 -4,0 -5,0 -2,4 -2,6 -6,8 -1,-2 -1,-2 -2,-6 -1,0 -2,0 -2,0 0,-2 0,-3 0,-4 -3,-1 -5,-1 -7,-2 0,-1 0,-1 0,-2 -1,0 -2,0 -4,0 0,-2 0,-3 0,-4 0,0 -1,0 -1,0 -1,11 -6,13 2,24 3,1 5,2 7,3 1,6 0,11 1,17 -1,0 -2,0 -4,0 -7,-6 -7,-8 -9,-18 0,0 -1,0 -2,0 -7,-12 2,-31 -14,-35 0,-2 0,-3 0,-4 z" />
+									<path
+									   class="state"
+									   id="china"
+									   d="m 803,361 c 1,-2 1,-3 2,-5 2,0 5,0 7,-1 0,2 0,3 0,4 -3,1 -6,1 -9,2 z m -1,-12 c -6,-11 -14,-7 -20,3 0,0 -1,0 -2,1 0,-1 0,-2 0,-3 -1,0 -3,0 -4,0 3,-7 3,-8 0,-16 -2,0 -3,1 -5,2 -1,-3 -2,-6 -3,-8 -5,1 -7,6 -13,8 0,2 0,3 1,5 -3,0 -6,1 -8,1 0,1 0,2 0,3 -3,0 -5,1 -8,1 1,-2 1,-3 1,-5 -3,0 -6,-1 -10,-1 -4,-4 -18,-13 -25,-14 0,-1 0,-2 0,-4 1,0 2,0 4,0 0,-5 0,-11 0,-16 -6,-1 -9,-1 -10,-7 -2,0 -5,0 -7,0 -2,-7 -7,-19 -7,-26 4,-1 7,-1 11,-2 0,-1 0,-2 0,-3 11,-4 5,-15 16,-18 2,-6 3,-7 7,-11 10,3 27,19 38,11 12,7 30,13 44,10 10,2 27,1 34,11 -1,1 -1,1 -4,0 1,1 2,3 3,4 1,0 2,1 4,1 -1,1 -1,2 -1,3 3,0 5,-1 14,0 0,1 0,1 0,2 -6,2 -9,3 -13,6 3,3 3,3 4,6 3,1 3,1 5,2 -1,1 -2,1 -3,2 2,0 3,1 4,1 1,2 1,3 1,5 -2,0 -2,0 -2,1 1,0 1,0 2,0 0,1 0,2 0,4 -1,0 -1,0 -2,0 7,14 -23,43 -36,41 0,1 0,3 0,5 -5,-1 -5,-4 -10,-5 z m 39,-4 c 1,-8 1,-8 3,-12 1,0 2,0 2,0 0,-1 0,-2 0,-3 2,0 3,0 4,0 -2,8 -2,11 -9,15 z" />
+									<path
+									   class="state"
+									   id="japan"
+									   d="m 887,288 c 0,2 0,3 0,5 0,0 -1,0 -2,0 -1,2 -2,5 -2,7 -2,0 -3,1 -5,1 0,-5 2,-6 2,-10 -1,1 -3,1 -4,2 0,-2 0,-5 0,-8 8,1 8,1 11,3 z m 0,0 c 0,-1 -1,-2 -1,-3 4,-6 8,-7 14,-8 0,1 0,2 0,3 -3,5 -6,5 -11,9 0,-1 -1,-1 -2,-1 z m 13,-8 c 0,-1 0,-2 0,-3 -1,0 -1,-1 -2,-2 -7,2 -13,8 -20,9 0,-1 0,-2 0,-3 5,-2 13,-10 16,-14 2,0 4,1 6,1 -2,-4 -1,-5 0,-9 1,0 2,0 3,0 -1,-7 -2,-9 -1,-15 3,0 3,0 5,1 0,-1 0,-3 0,-5 0,0 1,0 2,0 0,0 -1,-1 -1,-2 -1,0 -2,1 -3,1 0,-1 0,-2 0,-3 -2,2 -2,2 -1,6 -1,0 -3,0 -4,0 0,-2 0,-3 0,-5 2,-4 2,-4 5,-5 0,-1 -1,-3 -1,-5 -1,0 -2,-1 -3,-1 -3,-17 -12,-23 -8,-42 6,3 8,13 8,20 4,3 6,5 7,10 -1,0 -2,-1 -3,-1 0,7 1,13 7,17 0,1 0,2 0,2 1,0 3,0 5,0 0,3 1,5 1,7 -12,2 -3,13 -7,22 1,5 3,8 1,13 -2,0 -4,0 -5,1 0,2 0,3 0,5 -2,1 -5,2 -7,3 0,-1 0,-2 0,-3 z" />
+									<path
+									   class="state"
+									   id="siberia"
+									   d="m 758,250 c -6,-12 1,-24 -14,-27 1,-5 2,-6 2,-9 -6,-4 -11,-8 -13,-14 -12,-5 -16,-18 -18,-31 -3,-4 -4,-9 -8,-10 -1,-7 -1,-9 -5,-15 0,0 -1,1 -1,1 -2,-6 -2,-6 -3,-13 -2,0 -4,-1 -6,-1 1,-2 1,-2 0,-4 0,0 1,0 2,1 1,-3 1,-3 -1,-10 -3,0 -6,0 -9,1 -1,-6 -1,-12 -2,-17 1,-1 2,-2 3,-3 2,6 3,6 9,8 -2,-4 -2,-4 -2,-7 1,0 1,-1 1,-1 8,5 6,11 14,13 0,-1 0,-2 0,-2 -1,0 -2,0 -3,0 0,-1 0,-2 0,-3 -1,0 -1,0 -2,0 0,-3 0,-5 0,-8 0,0 -1,1 -1,1 -3,-3 -4,-4 -4,-9 3,-1 6,-3 9,-4 0,1 0,3 0,4 3,-1 5,-3 7,-5 0,0 -1,-1 -2,-2 8,-3 20,-11 29,-11 3,2 3,2 9,1 1,-2 1,-4 1,-5 9,-4 10,-2 17,3 1,3 1,3 3,3 0,-1 0,-1 0,-2 4,0 9,0 14,1 2,3 1,5 1,9 -5,3 -10,6 -15,9 5,0 8,-4 13,-4 0,1 0,2 1,3 1,0 1,0 2,0 0,-1 0,-2 0,-3 5,1 5,1 7,3 2,-6 9,-4 14,-4 0,1 0,2 1,3 2,1 4,2 6,2 1,6 2,7 2,12 -5,6 -6,12 -8,19 -8,0 -15,0 -23,2 0,1 1,2 1,3 1,1 2,1 3,1 0,1 0,2 0,3 2,1 5,2 8,2 0,1 0,2 0,3 -1,1 -3,2 -4,3 3,8 3,18 4,26 -3,3 -3,3 -8,6 -8,11 -14,35 -3,45 0,4 -1,7 1,11 -1,1 -1,2 -1,4 5,6 5,11 8,18 3,0 5,1 8,1 0,3 0,6 0,9 -14,3 -32,-3 -44,-10 z M 747,54 c 1,0 2,0 3,0 1,4 1,4 2,5 1,0 1,0 2,-1 0,2 1,5 2,7 -2,0 -4,0 -6,0 -1,-1 -1,-1 -3,-11 z m 0,0 c -2,3 -2,3 -3,8 -10,-1 -10,-1 -15,-3 1,-12 8,-8 18,-8 0,1 0,2 0,3 z m -22,-1 c 0,1 1,2 1,4 -4,0 -5,2 -8,2 -1,-2 -1,-2 0,-6 3,0 5,0 7,0 z m 0,0 c -4,-2 -4,-2 -5,-4 1,-1 1,-3 2,-4 6,-1 7,-1 12,3 -3,2 -6,3 -9,5 z" />
+									<path
+									   class="state"
+									   id="ural"
+									   d="m 720,239 c -5,-7 -3,-17 -15,-16 -3,-4 -14,-18 -18,-19 -6,-11 -17,-7 -27,-7 -1,-2 -1,-4 -2,-5 -1,-1 -3,-1 -4,-1 -1,-16 0,-33 -2,-50 -6,-10 0,-14 7,-22 0,-5 0,-9 1,-13 3,-4 3,-10 7,-14 4,3 8,5 12,7 -4,8 -7,12 1,17 0,5 0,10 -1,15 -3,2 -6,4 -9,6 6,0 6,0 13,-2 2,-4 2,-4 2,-11 1,0 3,0 4,0 1,1 2,2 3,3 1,2 1,2 0,4 2,0 4,1 6,1 1,7 1,7 3,13 0,0 1,-1 1,-1 4,6 4,8 5,15 4,1 5,6 8,10 2,13 6,26 18,31 2,6 7,10 13,14 0,3 -1,4 -2,9 15,3 8,15 14,27 -11,8 -28,-8 -38,-11 z" />
+									<path
+									   class="state"
+									   id="yakutsk"
+									   d="m 797,166 c -1,-8 -1,-18 -4,-26 1,-1 3,-2 4,-3 0,-1 0,-2 0,-3 -3,0 -6,-1 -8,-2 0,-1 0,-2 0,-3 -1,0 -2,0 -3,-1 0,-1 -1,-2 -1,-3 8,-2 15,-2 23,-2 2,-7 3,-13 8,-19 0,-5 -1,-6 -2,-12 1,0 2,-1 3,-2 -1,0 -3,0 -4,0 0,-1 0,-2 0,-3 7,0 19,-4 22,4 -1,1 -2,1 -3,1 1,2 1,3 1,4 5,0 8,4 13,4 1,-1 2,-3 3,-5 4,3 8,-1 10,2 3,0 5,-1 8,-1 -2,-1 -3,-2 -5,-2 0,-2 0,-4 -1,-5 3,0 6,0 8,-1 0,1 0,2 0,3 4,-2 4,-2 12,-3 0,1 0,2 0,3 -3,0 -3,0 -3,1 15,2 30,4 44,8 0,0 -1,1 -1,1 1,1 3,1 5,2 0,1 0,2 0,3 -1,1 -2,3 -3,5 -7,1 -12,5 -19,8 0,3 -1,7 -1,10 2,1 5,1 8,2 0,2 0,5 0,8 -2,0 -3,0 -4,0 -1,2 -2,4 -3,7 -2,0 -4,1 -6,2 -1,-1 -1,-2 -1,-3 -2,-1 -4,-1 -6,-2 -1,-2 -1,-4 -2,-5 -3,0 -5,1 -8,2 0,1 -1,2 -1,3 -2,0 -4,1 -7,1 -2,11 -11,13 -14,24 -5,-3 -6,-3 -8,-9 -3,0 -6,0 -8,-1 -1,-1 -1,-2 -1,-2 -19,-1 -21,1 -29,1 -2,2 -3,5 -5,7 -4,1 -8,2 -11,2 z m 60,-79 c 0,-1 1,-3 2,-4 8,0 8,0 9,1 -5,1 -6,2 -11,3 z m 0,-10 c -2,7 -11,2 -15,0 0,-1 0,-2 0,-3 2,0 3,0 5,0 0,-1 0,-2 1,-3 1,1 2,1 3,1 0,1 0,2 1,3 1,1 3,1 5,2 z m 5,0 c 0,-2 0,-3 0,-4 4,0 4,0 10,4 -3,0 -7,0 -10,0 z" />
+								  </g>
+								  <g
+									 id="Australia"
+									 stroke="#d65163"
+									 fill="#e78a94"
+									 visibility="visible">
+									<path
+									   class="state"
+									   id="eastern_australia"
+									   d="m 875,600 c 0,-18 0,-35 0,-52 -14,0 -28,0 -41,0 -1,-13 -2,-25 -3,-38 1,0 2,-1 2,-1 0,-8 6,-9 12,-10 0,-1 0,-2 0,-4 1,0 2,0 3,0 0,2 1,3 2,4 1,-1 1,-1 12,0 -1,4 -3,4 -5,6 0,1 0,3 0,5 7,3 11,6 18,5 2,-4 2,-13 4,-21 1,-1 2,-1 3,-1 1,6 2,10 6,14 0,0 1,-1 1,-1 5,8 5,18 15,21 0,1 0,3 0,4 1,0 2,1 3,1 0,1 1,2 1,3 32,8 6,44 3,62 -8,2 -14,5 -22,6 -1,-1 -2,-2 -3,-3 -2,3 -2,5 0,8 3,0 7,1 10,1 -2,8 -3,10 -11,12 -4,-9 -1,-16 -10,-21 z m 73,-6 c -8,-10 -19,-5 -11,-21 7,0 12,-6 13,-13 2,0 4,-1 6,-1 1,-4 3,-7 4,-11 1,0 2,0 3,0 0,2 1,4 1,5 4,1 4,1 5,3 0,1 -1,2 -1,3 1,0 2,0 3,0 -2,2 -2,2 -9,20 -1,0 -2,0 -3,0 -3,6 -5,12 -11,15 z m 24,-38 c -1,-8 -2,-9 -7,-14 4,-7 -1,-13 -1,-20 3,3 3,7 6,10 0,0 1,-1 1,-1 1,1 2,3 3,4 2,0 5,1 7,1 0,-1 1,-1 1,-2 1,2 2,4 3,6 -2,7 -2,7 -7,15 -2,0 -4,1 -6,1 z" />
+									<path
+									   class="state"
+									   id="new_guinea"
+									   d="m 936,485 c -2,-1 -5,-2 -8,-3 -2,-3 -2,-5 -6,-6 0,-1 0,-2 0,-3 -1,0 -2,0 -3,0 -1,8 -12,2 -18,1 1,-2 2,-4 3,-6 -1,-1 -2,-1 -3,-1 0,-1 0,-2 -1,-3 -2,-1 -4,-2 -6,-2 0,-1 1,-1 1,-2 -1,0 -2,0 -4,0 0,1 0,1 0,2 -1,0 -2,0 -3,-1 0,-1 0,-3 -1,-4 3,0 3,0 3,-1 -1,0 -3,0 -4,0 0,-2 0,-3 0,-4 -1,0 -2,-1 -2,-1 4,-4 9,-4 14,-2 -1,2 -2,4 -3,6 1,0 2,0 3,1 0,1 0,1 0,2 2,-1 4,-3 6,-4 0,-1 -1,-1 -1,-2 2,-2 21,8 24,10 1,2 2,4 3,6 1,0 2,0 3,1 0,1 0,2 1,3 -2,0 -3,0 -4,0 1,2 1,3 2,5 1,0 2,0 3,0 0,1 0,3 0,4 1,1 3,1 5,2 -1,0 -3,1 -4,2 z m 19,-24 c 0,1 0,2 -1,3 -8,3 -8,3 -19,5 -1,-1 -1,-2 -1,-3 7,-2 14,-3 21,-5 z m 0,0 c -4,-3 -4,-3 -7,-4 0,-1 0,-2 0,-3 3,1 6,2 10,3 0,1 0,2 1,3 -1,0 -3,1 -4,1 z" />
+									<path
+									   class="state"
+									   id="western_australia"
+									   d="m 831,510 c 1,13 2,25 3,38 13,0 27,0 41,0 0,17 0,34 0,52 -2,-1 -3,-1 -5,-1 0,-3 -1,-6 -2,-9 -4,0 -4,0 -5,-2 1,0 2,-1 3,-1 0,-1 0,-2 0,-3 -1,2 -1,2 -5,2 1,-1 2,-3 3,-4 -2,0 -5,1 -8,2 -2,-4 -4,-7 -5,-10 -12,-2 -25,-1 -32,9 -5,0 -8,-1 -13,-1 -11,6 -19,10 -30,5 2,-7 2,-11 1,-18 -5,-14 -5,-14 -5,-17 1,0 1,0 2,0 -2,-5 -1,-10 0,-15 1,0 3,0 4,0 0,-1 0,-1 0,-2 7,-4 14,-6 21,-9 0,-1 0,-2 0,-3 9,-3 12,-9 21,-12 0,-1 1,-2 1,-4 1,1 1,1 2,2 0,-1 0,-2 0,-3 1,0 3,-1 4,-1 1,1 2,2 3,3 -1,0 -1,1 -1,1 0,0 1,1 2,1 z" />
+									<path
+									   class="state"
+									   id="indonesia"
+									   d="m 838,474 c 0,0 1,-1 2,-1 3,-1 3,-1 6,1 -3,2 -7,4 -11,6 0,-2 0,-3 0,-4 1,-1 2,-1 3,-2 z m -16,2 c 0,0 0,0 0,1 -2,-1 -4,-1 -6,-1 0,0 0,1 0,2 -10,-2 -10,-2 -30,-2 0,-1 0,-2 0,-3 -2,-1 -5,-2 -7,-3 0,-2 0,-4 0,-6 -2,0 -3,0 -4,0 -3,-8 -6,-11 -8,-18 -1,0 -2,-1 -2,-1 -1,-4 -1,-4 -4,-10 -1,0 -2,0 -3,0 0,-2 -1,-4 -1,-6 5,1 5,1 13,4 2,6 5,8 7,13 1,0 2,-1 3,-1 1,6 2,7 8,8 0,1 0,2 0,3 -1,0 -2,1 -3,1 1,1 1,3 2,4 0,0 1,-1 1,-1 2,2 0,4 4,6 0,1 0,2 0,3 0,1 1,1 2,1 0,-1 0,-2 0,-2 9,-1 16,3 26,5 0,1 0,2 0,3 0,0 1,0 2,0 z m 0,0 c 3,-6 13,-3 18,-3 -1,0 -2,1 -2,1 -2,0 -3,0 -4,0 0,1 0,2 0,3 -4,-1 -8,-1 -12,-1 z m -1,-11 c 1,-11 4,-16 10,-24 5,0 10,0 15,-2 0,0 0,1 0,2 -4,2 -8,4 -13,3 0,1 0,2 -1,3 3,0 6,0 8,0 -1,2 -1,2 -6,2 0,4 0,8 0,12 -2,0 -4,0 -5,0 0,-2 0,-4 0,-7 -1,0 -1,0 -2,0 -1,4 -1,7 -2,11 -2,0 -3,0 -4,0 z m -19,-5 c -2,-4 -4,-5 -3,-9 -1,0 -2,0 -2,0 -1,-5 0,-7 2,-12 2,0 4,-1 7,-2 0,-1 0,-2 0,-3 3,-1 6,-2 8,-3 1,-3 2,-5 3,-7 1,0 2,0 3,0 0,-2 0,-3 1,-4 4,0 5,0 9,1 0,1 0,2 0,3 -1,0 -2,0 -3,1 1,0 1,1 2,2 -3,3 -6,8 -2,13 -7,5 -8,10 -11,17 -3,2 -3,2 -14,3 z m 39,-2 c 0,-1 0,-1 0,-2 7,-1 11,-2 17,2 -6,0 -11,0 -17,0 z m 8,-13 c 0,-2 0,-5 0,-8 1,1 2,1 3,1 0,3 1,5 1,7 -1,0 -3,0 -4,0 z m 26,-51 c 0,-1 0,-1 1,-2 0,0 1,0 2,-1 0,4 0,4 -2,7 -1,0 -3,1 -4,1 1,-2 2,-4 3,-5 z m -22,2 c 1,-5 8,-10 12,-14 0,8 -4,13 -12,14 z m 23,-4 c -1,1 -1,1 -1,2 -1,0 -2,0 -3,0 0,-6 -3,-8 -4,-12 4,0 8,4 12,6 -2,0 -3,1 -4,2 0,1 0,1 0,2 z m 5,-4 c 0,-2 -1,-5 -1,-8 -3,0 -5,0 -8,0 -1,-1 -1,-2 -2,-3 0,0 -1,0 -2,0 -2,-1 -3,-1 -4,-4 2,0 3,0 4,0 0,-2 0,-2 -2,-2 -1,-3 -1,-6 -1,-9 1,1 2,3 3,4 -2,-5 -2,-5 -1,-11 3,0 6,0 9,0 0,2 -1,3 -1,5 1,0 1,0 2,1 0,2 -1,4 -2,6 0,0 -1,-1 -1,-1 0,2 0,4 1,7 2,0 4,1 6,2 2,5 3,7 3,12 -1,1 -2,1 -3,1 z" />
+								  </g>
+								  <g
+									 id="Europe"
+									 stroke="#9482ad"
+									 fill="#cebade"
+									 visibility="visible">
+									<path
+									   class="state"
+									   id="great_britain"
+									   d="m 455,226 c -7,2 -23,9 -30,8 0,-1 -1,-2 -1,-3 4,-2 8,-5 12,-7 -2,0 -4,-1 -6,-1 2,-6 2,-6 3,-12 1,0 3,0 5,0 0,-3 -1,-5 1,-8 -1,0 -2,-1 -3,-1 0,-1 0,-3 0,-4 -1,0 -2,0 -3,0 0,-9 2,-13 3,-21 5,-2 5,-2 8,-2 1,2 1,2 0,6 2,1 4,2 6,3 -8,11 0,20 2,33 1,0 2,0 3,1 0,2 0,5 0,8 z m -40,0 c -1,-5 1,-9 0,-20 1,-1 2,-1 4,-2 -1,-2 -1,-2 0,-5 5,0 8,0 13,2 0,3 0,6 0,9 -1,0 -2,0 -3,0 -1,10 -3,14 -14,16 z" />
+									<path
+									   class="state"
+									   id="iceland"
+									   d="m 425,156 c -2,-1 -5,-2 -8,-2 0,-2 0,-3 -1,-5 3,0 3,0 3,-1 -1,0 -3,0 -4,0 0,-1 0,-2 0,-3 1,0 3,0 4,0 0,0 0,-1 0,-1 -1,0 -3,0 -4,0 0,-1 1,-2 1,-3 4,-2 4,-2 8,-1 0,0 0,1 0,2 7,0 15,-1 23,-1 1,1 2,1 3,2 -1,1 -1,1 -2,2 1,0 2,0 3,0 -2,12 -17,10 -26,11 z" />
+									<path
+									   class="state"
+									   id="northern_europe"
+									   d="m 470,242 c -2,-3 -3,-4 -6,-4 -2,-5 -6,-7 -9,-11 0,0 0,-1 0,-1 2,-3 4,-6 7,-7 2,-8 2,-8 4,-9 0,0 0,1 1,1 3,-4 6,-6 1,-10 0,-4 1,-8 2,-12 4,-2 5,-3 7,-7 1,6 3,15 -2,19 5,3 9,4 14,5 0,-1 1,-2 1,-3 1,1 2,2 2,3 4,-4 9,-4 14,-5 0,1 -1,2 -1,3 1,0 1,0 2,1 0,-1 0,-2 0,-3 1,0 3,-1 4,-1 3,2 6,4 9,6 2,8 3,14 3,23 -1,0 -2,0 -3,0 0,2 -1,3 -1,5 -2,5 -2,5 -4,16 -6,4 -8,3 -15,2 -1,-15 2,-14 -12,-15 0,2 -1,3 -1,5 -8,2 -10,2 -17,-1 z" />
+									<path
+									   class="state"
+									   id="scandinavia"
+									   d="m 541,95 c -9,16 1,39 1,57 -3,4 -6,8 -7,13 0,0 -1,0 -2,0 -8,1 -10,2 -19,2 -5,-7 -3,-12 -3,-20 1,0 2,0 3,0 4,-8 7,-11 7,-20 -2,1 -4,1 -6,2 -4,9 -8,15 -14,23 0,7 3,15 2,21 -1,0 -1,0 -2,0 -1,1 -1,3 -1,4 -1,1 -2,1 -3,1 -1,10 -1,17 -11,18 -2,-8 -7,-13 -6,-22 -1,0 -1,0 -2,0 -1,-1 -1,-1 -1,-2 -1,2 -3,4 -4,7 -5,0 -7,-1 -12,-3 -2,-11 -3,-12 -4,-21 1,-1 2,-1 2,-1 0,-2 0,-2 0,-3 0,-1 1,-1 2,-1 0,-1 -1,-1 -1,-1 3,-4 6,-3 8,-8 0,0 1,0 2,0 1,-1 2,-3 2,-5 5,1 5,-3 6,-7 1,0 2,-1 4,-2 -1,0 -1,-1 -1,-1 3,-4 3,-4 6,-15 1,0 1,1 2,1 0,-1 0,-2 0,-2 1,0 2,0 3,0 0,-4 0,-7 0,-11 3,-1 5,1 7,0 0,-1 -1,-3 -1,-4 4,-1 4,1 8,1 1,-4 1,-5 5,-5 0,-1 -1,-2 -1,-4 3,-3 8,-2 11,-2 0,2 0,2 2,2 0,-2 0,-3 0,-5 1,-1 3,-1 5,-1 -1,5 -1,5 0,6 1,-2 2,-3 3,-5 4,1 7,3 11,4 0,1 0,2 0,3 0,1 -1,2 -2,3 0,1 0,2 1,3 z m 16,-47 c 1,0 2,0 3,1 0,1 0,2 0,2 -1,0 -2,0 -3,0 -1,5 -1,5 -5,5 -2,2 -4,5 -6,7 -2,-1 -3,-1 -4,-2 0,0 1,-1 1,-1 -1,-1 -2,-1 -3,-2 0,-3 0,-3 1,-4 -2,-1 -3,1 -6,0 0,-4 -2,-4 -3,-8 5,1 10,1 15,-1 1,1 1,3 2,4 1,-2 2,-5 4,-7 0,2 1,4 2,6 0,0 1,0 2,0 z m 3,13 c -1,-1 -2,-2 -3,-3 1,-1 1,-2 1,-4 3,0 5,0 7,-1 -1,1 -1,1 -1,2 0,0 1,1 2,1 -2,3 -2,3 -6,5 z m -3,-13 c 0,-3 0,-5 0,-7 2,0 4,0 6,0 0,1 0,2 1,3 2,0 4,0 6,0 0,1 -1,3 -1,5 -3,0 -5,0 -8,0 0,0 1,0 1,-1 -1,0 -3,0 -5,0 z" />
+									<path
+									   class="state"
+									   id="southern_europe"
+									   d="m 521,316 c -1,-2 -1,-2 -4,-3 0,-1 0,-2 0,-3 10,1 10,1 15,3 0,1 0,2 1,3 -4,0 -8,0 -12,0 z m -47,-28 c -1,-3 -1,-6 -2,-10 1,0 2,0 3,0 0,3 0,6 1,9 -1,0 -2,1 -2,1 z m 53,1 c -1,0 -2,0 -3,0 0,0 1,1 1,1 -1,0 -2,0 -2,1 0,-3 0,-3 -2,-3 1,7 4,16 -2,21 0,0 -1,-1 -1,-1 0,0 -1,1 -1,1 -3,-6 -3,-6 -5,-18 -1,0 -1,0 -2,0 -2,-6 -5,-11 -7,-15 -6,-2 -12,-13 -16,-19 -4,6 7,20 12,22 3,4 6,9 8,13 -2,-1 -3,-2 -5,-4 -3,4 -2,6 0,9 -1,0 -2,0 -3,0 -2,3 -4,6 -6,8 -1,1 -2,1 -2,1 -2,-2 -3,-3 -4,-4 1,-1 1,-1 6,-1 1,-3 2,-5 3,-7 -3,-6 -9,-14 -13,-17 0,0 0,0 0,-1 -1,-1 -2,-1 -3,-1 -1,-3 -2,-5 -2,-8 -2,0 -5,0 -7,0 0,1 -1,2 -1,2 -8,-4 -5,-21 1,-26 7,3 9,3 16,1 0,-2 1,-3 1,-5 14,1 11,0 12,15 7,1 9,2 15,-2 2,-11 2,-11 4,-16 4,-2 4,-2 8,-2 0,1 0,2 1,3 1,1 2,1 3,1 2,10 2,17 10,22 -3,4 -4,9 -6,14 -8,15 0,0 -8,15 z" />
+									<path
+									   class="state"
+									   id="ukraine"
+									   d="m 583,279 c 1,-9 -5,-13 -12,-15 0,-2 -1,-4 -1,-6 -1,0 -2,0 -3,0 1,-5 3,-7 6,-10 -5,1 -10,1 -13,5 2,1 2,1 5,1 0,1 0,1 0,2 -1,1 -2,1 -3,1 0,1 -1,2 -1,3 -5,0 -5,0 -10,-3 1,-2 1,-2 1,-4 -1,0 -3,1 -4,1 -1,0 -2,-1 -2,-1 3,-2 3,-2 3,-3 -1,0 -3,0 -5,0 0,2 0,5 0,8 -2,0 -2,0 -2,1 -9,-5 -9,-12 -11,-22 -1,0 -2,0 -3,-1 -1,-1 -1,-2 -1,-3 -4,0 -4,0 -8,2 0,-2 1,-3 1,-5 1,0 2,0 3,0 0,-9 -1,-15 -3,-23 -3,-2 -6,-4 -9,-6 0,-3 -1,-6 -1,-8 1,0 1,0 2,0 1,-4 3,-7 4,-11 1,0 2,-1 3,-1 0,1 -1,3 -1,4 2,0 3,1 5,1 0,-2 0,-4 0,-6 -1,0 -2,0 -3,0 0,-1 1,-2 1,-3 -1,-1 -2,-1 -2,-1 0,-1 0,-2 1,-3 3,-1 3,-1 6,1 6,-3 6,-3 12,-4 -1,-3 -2,-3 -5,-5 1,0 2,0 2,0 1,-5 4,-9 7,-13 0,-18 -10,-41 -1,-57 4,-3 5,-3 11,-3 0,2 0,3 0,4 7,1 32,14 23,23 -5,2 -5,2 -19,3 0,-1 -1,-3 -1,-3 -2,-1 -3,-1 -4,-1 1,6 6,9 11,11 0,3 -1,5 -1,7 6,0 11,-1 17,1 -1,-2 -1,-4 -2,-6 4,-2 5,-2 9,-2 1,-2 3,-4 4,-7 -1,0 -2,-1 -3,-1 0,-4 -2,-9 0,-13 5,1 8,2 10,7 -1,0 -2,0 -3,0 0,2 0,4 1,6 1,0 3,0 4,0 1,-2 1,-3 1,-5 5,0 6,-3 11,-3 0,-2 1,-3 1,-5 5,-2 8,-4 14,-4 -1,0 -3,1 -4,2 0,1 0,1 0,2 5,-1 7,-2 12,-1 0,-1 1,-3 2,-4 0,1 0,2 0,3 2,0 3,0 4,0 -1,-4 -1,-4 -2,-7 0,0 0,-1 1,-1 4,0 6,2 19,4 1,2 1,2 3,4 -1,4 -1,8 -1,13 -7,8 -13,12 -7,22 2,17 1,34 2,50 1,0 3,0 4,1 1,1 1,3 2,5 -1,0 0,13 0,15 -11,7 -14,5 -25,6 0,-1 -1,-2 -1,-3 -9,1 -23,2 -31,7 -7,12 4,19 0,33 -2,5 -6,11 1,13 0,4 0,7 0,11 2,1 5,2 7,2 -1,4 -3,8 -4,12 -5,2 -5,2 -9,2 -1,-2 -3,-5 -4,-7 -1,0 -2,0 -4,0 0,-2 0,-4 -1,-6 -5,-2 -5,-2 -6,-3 z M 638,98 c -1,0 -1,1 -1,1 -2,-1 -3,-1 -5,-2 0,-5 0,-5 1,-6 2,2 3,5 5,7 z M 615,86 c -4,-2 -8,-4 -12,-6 2,-4 3,-7 7,-9 -1,-1 -1,-1 -2,-2 5,-5 5,-5 12,-8 0,-1 0,-2 0,-3 10,-2 10,-2 13,-4 0,2 0,3 0,4 -3,3 -9,6 -16,11 0,1 0,1 0,2 -1,0 -1,0 -2,0 0,7 2,8 4,14 -2,0 -3,0 -4,1 z" />
+									<path
+									   class="state"
+									   id="western_europe"
+									   d="m 428,312 c -1,-2 -3,-3 -4,-5 -3,0 -6,0 -9,0 -3,-11 -2,-19 -1,-31 0,0 0,-1 -1,-1 3,-12 15,-7 26,-7 5,-6 0,-16 -1,-22 -4,-1 -4,-1 -8,-4 3,-1 3,-1 4,-4 1,0 2,0 3,0 0,1 0,1 0,2 6,-2 6,-2 7,-3 0,0 -1,0 -2,-1 0,-1 0,-1 0,-2 2,0 5,0 8,0 1,-1 1,-1 2,-5 3,0 3,0 3,-2 3,4 7,6 9,11 3,0 4,1 6,4 -6,5 -9,22 -1,26 -1,1 -1,2 -1,3 -4,0 -8,0 -12,1 -6,11 -7,12 -7,25 -1,3 -4,5 -6,8 -6,1 -10,2 -14,7 0,0 -1,0 -1,0 z" />
+								  </g>
+								  <g
+									 id="North America"
+									 stroke="#c99b32"
+									 fill="#efcb73"
+									 visibility="visible">
+									<path
+									   class="state"
+									   id="alaska"
+									   d="m 109,174 c 1,1 2,2 3,3 0,2 0,4 0,7 -1,-3 -3,-5 -5,-8 1,0 1,-1 2,-2 z m -4,-10 c 0,-1 0,-2 0,-3 3,0 3,0 3,-1 -3,-1 -6,-3 -8,-4 -1,1 -1,2 -1,2 -2,0 -4,-1 -6,-2 0,-1 0,-2 0,-3 0,-1 -1,-1 -2,-1 0,1 -1,1 -1,2 -1,0 -2,-1 -3,-1 1,-1 1,-1 2,-2 -1,0 -2,-1 -2,-1 0,0 -1,1 -1,2 -3,-1 -3,-2 -5,-5 -3,0 -3,0 -6,-2 -1,0 -1,0 -2,1 1,1 2,3 3,5 -8,2 -13,4 -17,5 0,-1 0,-3 0,-4 3,-2 5,-4 8,-6 -6,1 -10,7 -15,6 0,2 0,4 0,5 -2,2 -5,4 -7,5 0,1 0,2 0,3 -6,3 -24,13 -29,9 5,-4 10,-6 16,-8 0,0 0,-1 0,-2 4,-1 4,-3 5,-7 -2,1 -5,1 -7,1 0,-2 0,-2 -2,-2 0,1 0,2 0,2 -1,1 -3,1 -5,1 0,-3 0,-3 2,-7 -1,0 -2,0 -3,0 -1,-5 -3,-4 -6,-3 -1,-2 -1,-4 -2,-6 2,-1 3,-2 4,-2 -1,-1 -2,-1 -2,-1 0,-2 0,-4 1,-5 5,-3 9,-1 15,0 2,-3 5,-6 4,-9 -7,4 -8,3 -14,-2 1,-1 2,-3 3,-5 1,0 1,1 1,1 0,-2 0,-3 0,-5 3,0 6,0 9,0 -2,-4 -5,-8 -4,-12 1,-1 2,-1 4,-1 0,-1 0,-2 0,-3 9,-2 19,-9 29,-8 0,1 -1,2 -1,3 13,0 26,5 40,6 0,17 0,33 0,49 2,0 5,0 7,0 8,10 12,20 12,32 -4,-2 -11,-12 -13,-17 -1,0 -3,0 -4,0 z m -61,8 c 0,-3 2,-8 6,-7 1,1 1,2 1,3 -2,1 -5,2 -7,4 z" />
+									<path
+									   class="state"
+									   id="alberta"
+									   d="m 136,205 c -1,-1 -2,-3 -4,-4 0,-2 1,-4 1,-6 -3,-3 -6,-6 -8,-8 -1,0 -3,0 -4,0 0,-2 0,-3 0,-5 1,1 1,1 1,2 0,-1 0,-2 0,-3 0,-12 -4,-22 -12,-32 34,2 69,4 103,6 -1,17 -3,35 -4,52 -24,-1 -49,-1 -73,-2 z" />
+									<path
+									   class="state"
+									   id="central_america"
+									   d="m 212,363 c -3,-4 -6,-9 -9,-14 0,-7 0,-7 -2,-16 -10,-6 -18,-11 -28,-16 0,-1 0,-2 0,-3 1,0 3,0 4,0 0,-1 -1,-3 -1,-4 -9,-7 -11,-18 -16,-27 -1,0 -1,1 -2,1 4,11 8,20 11,32 -6,-2 -9,-10 -10,-16 -4,-1 -5,-2 -7,-6 0,-1 1,-1 1,-2 -2,-6 -3,-10 -8,-13 -1,-1 -1,-3 -1,-4 4,0 9,0 14,0 8,9 18,0 27,10 2,0 4,1 6,2 2,2 4,4 6,6 -2,8 -2,22 5,26 4,0 8,0 12,0 4,-4 11,-4 14,2 -2,5 -9,8 -13,11 2,1 4,2 6,3 0,2 0,4 0,6 -6,4 -8,5 -11,11 0,1 1,2 1,2 6,1 8,0 13,4 -5,3 -8,3 -12,5 z" />
+									<path
+									   class="state"
+									   id="eastern_united_states"
+									   d="m 197,293 c -2,-2 -4,-4 -6,-6 0,-4 0,-9 0,-13 1,0 3,0 5,-1 1,-4 2,-8 3,-13 2,0 5,-1 8,-1 0,-3 1,-6 2,-9 6,0 12,0 18,0 1,-15 1,-29 2,-43 3,1 6,1 9,1 1,1 2,2 3,3 0,1 0,2 0,3 -1,0 -2,0 -3,0 0,1 0,2 0,3 5,-1 9,-1 13,-2 1,1 2,2 2,3 2,-1 2,-1 6,0 0,1 0,2 0,3 -2,0 -4,0 -5,0 -4,6 -6,9 -7,17 2,-1 4,-1 5,-2 1,-3 1,-7 2,-10 1,0 1,0 2,0 1,-3 2,-4 4,-5 3,3 2,5 0,9 1,0 3,0 4,0 0,0 0,1 0,1 0,2 -1,4 -1,6 7,1 13,-5 20,-7 0,-1 0,-1 0,-2 3,-1 6,-2 9,-3 7,0 7,0 17,-2 0,-2 0,-4 1,-5 5,-2 5,-2 9,-2 0,4 0,8 0,13 -15,1 -18,18 -33,21 -1,1 -2,3 -3,5 -1,0 -1,-1 -2,-1 0,2 0,4 0,6 -4,5 -11,9 -17,11 -1,4 -1,4 -3,8 0,8 0,15 -3,22 -2,1 -4,1 -6,2 -2,-14 -2,-14 -1,-20 -8,0 -10,-1 -20,-2 0,2 1,4 1,6 -10,-5 -19,-4 -30,0 -3,5 -3,5 -5,6 z" />
+									<path
+									   class="state"
+									   id="greenland"
+									   d="m 373,174 c -4,-2 -6,-3 -8,-8 -2,0 -4,0 -7,-1 0,-1 0,-2 -1,-3 -1,0 -2,0 -2,-1 -1,-1 -1,-3 -1,-5 -2,-1 -3,-1 -4,-2 0,-1 1,-1 2,-2 -1,-4 -2,-7 -3,-11 0,0 -1,-1 -2,-1 0,-2 0,-4 0,-5 1,-1 2,-1 3,-1 -4,-3 -2,-5 0,-9 1,1 1,1 2,2 0,-2 1,-5 2,-7 2,0 2,0 2,-1 -2,0 -4,0 -6,0 0,1 1,2 1,4 -1,0 -3,0 -4,0 0,-1 0,-3 0,-4 0,-1 1,-1 1,-2 -1,0 -1,0 -2,-1 1,-4 1,-4 2,-6 6,3 6,3 8,3 -1,-2 -2,-4 -3,-6 -2,1 -3,1 -5,1 0,-10 -2,-22 -12,-25 0,-1 0,-2 0,-4 -1,0 -3,1 -4,1 -2,-2 -2,-2 -3,-5 -7,1 -9,5 -17,3 -1,-3 -1,-3 -2,-3 0,1 0,2 0,3 -5,-1 -5,-1 -8,-2 -1,-4 -1,-7 -2,-10 3,-1 3,-1 10,1 0,-1 0,-2 0,-3 -2,0 -5,0 -8,-1 2,-7 10,-3 16,-7 -2,-1 -3,-2 -4,-3 6,-3 10,-5 17,-7 0,-1 0,-2 0,-2 2,0 4,0 6,0 1,-4 1,-4 4,-5 1,0 2,1 3,2 0,-2 1,-4 2,-5 3,0 5,4 6,4 0,-1 0,-2 0,-3 2,0 3,1 4,1 1,-1 1,-2 1,-2 2,-1 4,-1 6,-1 0,1 1,2 1,3 2,-1 2,-1 10,-3 0,0 -1,-1 -1,-1 1,-2 1,-2 13,-2 -1,-3 -1,-6 -1,-9 3,0 6,0 10,-1 0,1 0,2 0,3 0,0 1,0 2,0 3,-9 19,-7 26,-7 0,1 0,2 0,3 13,3 22,7 36,8 0,1 0,2 0,3 -2,0 -4,1 -6,2 5,-1 10,-3 13,0 -4,4 -6,4 -13,4 0,1 0,2 0,3 4,0 9,-1 12,2 0,-1 1,-1 1,-2 7,-1 14,-1 21,-2 1,1 1,2 2,3 -1,1 -1,1 -10,3 1,0 1,2 1,3 -1,0 -2,0 -4,0 -2,4 -3,9 -7,10 -1,3 -1,6 -1,9 1,0 2,0 3,0 0,2 0,3 0,4 0,1 -1,1 -2,1 0,2 0,4 0,6 -1,0 -2,1 -3,1 0,1 0,2 0,3 2,0 4,0 6,1 0,1 0,3 0,4 -8,1 -7,5 -8,11 -2,0 -2,-3 -3,-3 0,1 0,2 0,3 -3,-1 -6,-4 -9,-1 2,1 4,2 7,3 0,3 1,6 2,9 -2,2 -3,4 -4,6 -2,-1 -2,-1 -5,-1 -3,-4 -4,-8 -5,-8 0,1 0,3 0,5 -2,1 -3,1 -5,2 3,1 6,1 9,2 -1,1 -2,3 -2,4 -10,3 -18,8 -28,10 0,0 0,-1 0,-2 -5,4 -7,6 -12,6 0,1 0,2 0,3 -7,2 -14,2 -20,4 0,7 -4,10 -8,16 -2,8 -4,12 -8,18 z" />
+									<path
+									   class="state"
+									   id="northwest_territory"
+									   d="m 213,155 c -34,-2 -69,-4 -103,-6 -2,0 -5,0 -7,0 0,-16 0,-32 0,-49 2,2 5,3 7,4 1,-1 1,-2 1,-3 4,-1 4,-1 10,-1 0,0 0,1 1,1 -1,0 -2,1 -3,1 7,2 7,2 9,3 5,-3 13,-3 18,-3 0,0 -1,-1 -1,-1 2,0 4,0 6,0 3,-3 4,-3 8,-3 0,1 -1,2 -1,3 2,0 4,-1 10,-2 0,1 0,2 0,3 -1,0 -2,0 -3,0 0,1 0,1 0,2 9,-4 18,2 27,4 0,1 0,2 0,3 -1,0 -2,0 -2,0 0,1 0,2 0,3 6,0 9,-1 15,-2 0,1 0,2 0,3 1,0 2,0 3,0 0,-1 0,-2 0,-3 1,0 2,0 4,0 0,-1 -3,-1 -3,-2 9,-1 13,0 22,2 -1,15 -2,29 -3,44 -5,-1 -10,-1 -15,-1 z m 15,1 c 1,-15 2,-29 3,-44 2,0 4,-1 6,-1 -1,-4 -1,-4 -2,-6 3,-1 5,-1 8,-1 0,2 0,3 0,4 2,0 4,0 6,0 0,-1 0,-1 0,-2 -1,0 -2,0 -3,0 3,-17 9,-26 26,-28 -4,6 -5,10 -12,10 -2,10 0,14 3,23 1,-1 2,-3 2,-4 2,1 3,1 4,2 1,2 1,4 1,6 2,0 3,0 4,0 0,-1 0,-2 0,-3 1,0 2,-1 3,-1 0,-1 1,-3 1,-4 3,0 5,0 8,0 0,0 0,-1 0,-1 -3,0 -5,0 -8,0 0,-1 0,-2 -1,-3 0,0 -1,1 -1,1 -4,-6 -3,-7 -2,-15 5,-2 8,-4 14,-4 -1,2 -3,4 -4,6 0,2 1,4 1,5 2,-3 3,-5 6,-7 0,-2 1,-4 1,-6 4,0 8,0 12,0 -2,4 -3,7 -4,11 2,0 4,0 6,0 0,-6 0,-6 1,-7 9,5 9,5 10,6 0,1 0,2 -1,3 8,1 8,1 9,2 0,1 -1,1 -1,2 1,0 3,0 4,0 0,1 -1,2 -1,3 2,1 5,3 7,4 0,1 -1,2 -1,3 -1,0 -3,0 -4,0 0,0 0,1 0,2 1,0 3,0 4,0 0,1 0,2 0,3 2,0 3,0 5,0 1,2 2,5 3,8 1,0 1,0 2,0 -1,2 -2,4 -3,5 -2,1 -3,1 -4,1 -2,-2 -2,-2 -4,-7 -1,1 -1,1 -1,7 1,1 2,2 3,3 -1,3 -1,6 -1,9 -4,0 -5,0 -8,-3 0,2 0,2 2,6 -8,-1 -14,-2 -16,-10 -5,0 -10,0 -15,-1 0,-1 1,-2 1,-3 9,-3 13,-5 18,-6 0,-1 -1,-2 -1,-3 -1,0 -3,0 -4,1 0,-2 -1,-3 -1,-5 -2,0 -4,0 -7,1 1,-1 1,-3 1,-3 1,-1 2,-1 3,-1 0,-1 0,-2 0,-3 -1,0 -2,0 -2,0 -1,-3 -1,-5 -2,-8 -1,0 -1,0 -1,3 -3,0 -5,1 -8,2 0,-1 -1,-2 -1,-2 -1,0 -3,0 -4,1 0,12 -4,20 -18,19 -2,3 -2,4 -5,5 -3,-2 -4,-4 -7,-4 1,2 3,4 5,6 -5,5 -13,8 -20,12 -1,4 -3,7 -5,11 -3,0 -6,0 -10,0 z m 36,-11 c 1,-5 3,-10 6,-15 2,1 4,1 5,1 0,1 0,2 0,2 1,0 2,0 3,0 1,4 2,4 5,6 -1,2 -1,2 -2,5 -1,0 -2,0 -3,0 0,-1 0,-3 0,-4 -6,1 -8,4 -14,5 z m 32,-21 c -1,-6 -1,-6 5,-8 0,2 0,4 0,6 -2,0 -3,1 -5,2 z M 195,110 c -1,-3 -3,-6 -4,-8 -4,-1 -9,-1 -13,-2 -1,-2 -2,-5 -2,-8 2,0 4,-1 6,-2 -1,0 -3,0 -4,-1 1,-1 1,-1 9,-3 -2,0 -4,-1 -5,-1 -1,-1 -1,-2 -1,-3 6,-1 7,-2 14,-2 3,4 5,3 9,5 -1,1 -1,1 -2,1 3,1 6,2 8,2 1,-2 1,-2 3,-3 2,3 2,4 5,5 1,-4 3,-8 4,-12 3,6 3,10 2,17 3,1 5,2 8,3 0,1 0,1 0,2 -1,1 -2,1 -3,1 1,0 1,1 2,1 -2,1 -3,1 -4,2 0,1 1,2 1,3 -4,0 -5,0 -9,-2 -8,2 -16,3 -24,5 z m 40,-15 c -1,-3 -2,-6 -2,-9 0,-1 1,-2 2,-3 1,1 1,2 1,3 1,-2 2,-3 3,-4 0,0 1,1 1,1 0,-1 1,-2 1,-2 1,0 2,0 4,0 -1,1 -1,3 -2,5 3,-1 6,-2 8,-2 -3,5 -3,5 -6,6 0,1 0,2 0,2 -4,1 -7,2 -10,3 z m -75,-7 c 0,-2 -1,-4 -1,-6 2,-1 3,-1 5,-1 0,-2 0,-3 0,-4 6,-1 6,-1 10,-3 0,-1 0,-2 0,-3 2,0 4,0 5,0 1,2 1,3 1,5 3,-1 5,-1 7,-1 0,1 -1,2 -1,3 -4,2 -8,3 -12,5 0,1 -1,2 -1,3 -9,0 -9,0 -13,2 z m 92,-9 c 0,-2 0,-5 0,-8 1,1 2,1 3,1 1,3 1,5 1,7 -1,0 -2,0 -4,0 z m -53,-1 c -2,-1 -3,-1 -4,-2 0,-1 1,-1 1,-1 -2,-1 -3,-1 -5,-1 0,-1 0,-2 0,-3 1,0 3,-1 4,-2 -1,0 -1,-1 -1,-1 -3,1 -6,2 -8,3 -1,-1 -1,-2 -1,-2 -2,0 -3,0 -4,0 2,-8 15,-7 21,-7 0,1 0,2 0,3 -3,0 -3,0 -5,2 3,0 6,0 8,0 1,1 2,2 2,3 2,-1 4,-1 6,-1 -1,-1 -1,-2 -1,-3 4,-3 8,-1 14,-1 0,1 0,2 0,4 -3,0 -3,0 -3,1 1,0 3,0 4,0 -1,1 -1,3 -1,4 -11,1 -16,1 -27,4 z m 41,-3 c -3,-2 -6,-2 -9,-2 0,-3 1,-7 1,-10 1,0 3,0 4,0 0,2 1,3 2,4 0,-1 0,-1 0,-2 3,-1 6,-2 8,-3 1,2 2,4 2,6 -5,3 -5,3 -8,7 z m 28,-1 c -5,-2 -8,-3 -11,-8 -2,0 -3,0 -5,0 0,-2 0,-5 0,-8 -5,-1 -5,-7 -6,-12 1,0 2,0 3,0 0,1 0,2 0,3 4,2 5,2 7,6 1,0 2,0 3,0 1,4 3,7 5,10 8,0 16,1 24,1 0,2 0,5 -1,7 -6,0 -13,1 -19,1 z m 22,-9 c -2,-1 -4,-1 -6,-2 0,-1 0,-1 0,-2 -1,-1 -2,-1 -2,-1 -1,1 -1,1 -1,2 -3,0 -5,-1 -7,-1 0,-1 -1,-2 -1,-3 -1,0 -3,0 -4,0 -1,-1 -1,-2 -1,-3 -4,1 -5,1 -8,-1 -1,-1 -1,-2 -1,-3 3,0 6,0 9,0 1,-1 1,-2 2,-3 1,0 2,0 3,0 0,1 1,2 1,3 1,0 2,0 3,0 0,-1 0,-2 0,-3 -4,-1 -7,-2 -10,-2 1,-2 1,-2 9,-3 0,-1 0,-1 1,-2 -3,0 -7,-1 -10,-1 0,-1 0,-2 0,-3 11,-7 25,-5 38,-6 -13,-5 -27,1 -40,1 -1,-1 -2,-1 -2,-2 1,-1 3,-2 5,-2 0,-2 1,-5 1,-7 3,0 5,1 8,1 1,-1 1,-2 2,-3 10,0 20,-1 30,-2 0,1 0,2 0,3 18,-1 18,-1 27,-3 0,2 0,4 1,5 4,1 18,-1 13,7 -1,1 -4,1 -10,4 0,1 0,2 0,3 -4,0 -6,-1 -8,0 0,1 1,1 1,2 -1,1 -19,6 -21,8 0,1 0,2 1,3 -7,2 -7,2 -10,5 0,1 0,2 0,3 -5,0 -6,-1 -10,-4 0,5 1,6 3,10 -2,1 -4,1 -6,2 z m -66,-8 c 0,-2 0,-3 0,-5 1,0 3,0 4,0 0,1 0,3 0,4 -1,0 -2,0 -4,1 z m 17,0 c -4,-6 -9,-5 -6,-13 5,3 5,3 7,4 1,4 1,5 -1,9 z" />
+									<path
+									   class="state"
+									   id="ontario"
+									   d="m 264,231 c 2,-1 2,-1 3,-6 1,1 3,1 4,2 0,-2 -1,-4 -1,-6 -16,-5 -8,-18 -29,-10 -1,-1 -2,-2 -3,-3 -3,0 -6,0 -9,-1 -6,0 -13,0 -20,0 1,-17 3,-35 4,-52 5,0 10,0 15,1 4,0 7,0 10,0 0,2 0,4 0,5 1,1 2,1 3,1 0,2 0,4 1,6 2,2 5,3 8,5 0,1 0,2 0,3 7,2 15,6 23,5 0,8 1,11 5,17 0,8 -1,17 -1,25 1,0 2,0 4,0 0,-1 0,-2 0,-2 5,0 7,0 11,4 -3,1 -6,2 -9,3 0,1 0,1 0,2 -7,2 -13,8 -20,7 0,-2 1,-4 1,-6 z" />
+									<path
+									   class="state"
+									   id="western_united_states"
+									   d="m 144,275 c -15,-24 -15,-33 -9,-61 1,0 2,0 4,0 -1,-5 -1,-5 -3,-9 24,1 49,1 73,2 7,0 14,0 20,0 -1,14 -1,28 -2,43 -6,0 -12,0 -18,0 -1,3 -2,6 -2,9 -3,0 -6,1 -8,1 -1,5 -2,9 -3,13 -2,1 -4,1 -5,1 0,4 0,9 0,13 -2,-1 -4,-2 -6,-2 -9,-10 -19,-1 -27,-10 -5,0 -10,0 -14,0 z" />
+									<path
+									   class="state"
+									   id="quebec"
+									   d="m 319,229 c 0,-5 0,-9 0,-13 -4,0 -4,0 -9,2 -1,1 -1,3 -1,5 -10,2 -10,2 -17,2 -4,-4 -6,-4 -11,-4 0,0 0,1 0,2 -2,0 -3,0 -4,0 0,-8 1,-17 1,-25 1,0 2,0 3,0 2,-5 2,-11 2,-17 5,-1 7,-3 11,-6 0,-7 -1,-9 -3,-15 8,-2 7,-8 8,-16 5,3 10,2 15,2 0,1 1,2 1,3 1,0 3,0 4,0 3,6 3,6 4,9 -1,0 -2,0 -3,0 1,3 3,5 4,7 2,1 3,1 5,1 0,0 0,-1 0,-2 2,-1 4,-2 6,-3 0,-1 0,-3 1,-5 1,-1 3,-2 5,-2 3,7 4,17 6,24 2,2 5,4 8,6 -4,2 -4,2 -4,4 3,0 6,0 9,0 0,3 1,6 1,9 -9,2 -9,2 -15,4 -7,7 -18,1 -22,6 2,1 5,2 7,3 0,1 0,2 1,4 -2,0 -3,0 -4,1 2,1 2,1 2,7 3,0 6,0 10,0 0,1 0,2 0,3 -9,3 -13,9 -21,10 0,-1 0,-2 0,-3 2,-1 3,-2 5,-3 -1,-1 -1,-1 -5,0 z m 38,-10 c 0,-1 -1,-2 -2,-4 -1,1 -2,2 -4,3 0,-1 0,-2 0,-3 -2,0 -5,0 -7,-1 0,-2 1,-3 2,-5 1,0 2,0 3,0 1,-6 9,-10 15,-11 -1,2 -1,4 -1,5 -2,0 -3,0 -4,0 0,1 0,2 1,3 1,-1 2,-1 3,-1 0,1 1,3 2,4 -1,0 -2,1 -2,1 0,1 0,2 0,3 1,0 2,1 3,1 0,1 0,2 -1,3 -2,1 -5,1 -8,2 z" />
+								  </g>
+								  <g
+									 id="South America"
+									 stroke="#de7952"
+									 fill="#e79273"
+									 visibility="visible">
+									<path
+									   class="state"
+									   id="argentina"
+									   d="m 227,487 c 1,0 3,-1 5,-2 0,2 1,5 1,8 6,2 5,8 10,10 1,-2 2,-4 3,-5 1,0 2,-1 3,-1 3,4 4,3 9,1 0,1 0,2 0,3 1,0 3,0 5,0 4,7 9,7 16,10 -1,4 -2,7 -4,11 4,-1 8,-1 12,-2 2,-4 2,-4 5,-6 1,1 1,2 2,3 -4,3 -10,8 -11,13 2,0 4,0 7,0 0,2 0,2 0,6 5,1 6,4 10,8 0,2 0,2 -3,2 0,1 0,2 -1,4 -8,3 -12,-1 -19,-1 5,5 5,5 7,8 0,0 1,0 1,-1 0,3 0,6 0,8 -3,2 -13,3 -16,5 -1,6 -1,6 -2,9 -2,0 -4,0 -6,0 0,-1 -1,-1 -1,-2 0,1 0,3 0,4 0,1 1,2 2,3 -3,1 -3,1 -3,2 1,0 2,0 2,0 0,1 0,2 0,3 0,0 -1,0 -2,0 0,1 0,2 1,3 -4,4 -4,4 -4,9 1,0 2,1 3,1 -1,3 -1,5 -1,8 -1,0 -2,1 -3,1 1,3 -2,8 -2,11 1,1 3,3 4,4 0,1 -1,1 -2,2 1,1 1,2 1,3 1,0 2,0 3,0 0,1 0,2 0,3 6,3 12,6 18,10 -14,4 -13,3 -26,0 1,-1 1,-1 1,-2 -1,0 -2,0 -3,0 0,-2 0,-3 0,-4 -2,0 -4,0 -5,0 0,-1 0,-2 0,-3 0,0 -1,1 -2,1 -1,-1 -3,-1 -5,-2 0,-2 0,-3 0,-4 -9,-5 -9,-14 -10,-23 -3,0 -3,0 -4,-2 1,-1 1,-2 1,-3 -1,0 -1,0 -2,0 0,-1 0,-3 0,-4 2,0 2,0 2,-1 -1,0 -1,0 -2,0 0,-2 0,-4 0,-6 1,0 2,0 4,0 0,-4 0,-9 0,-13 -1,0 -2,-1 -3,-1 5,-28 6,-61 4,-89 m 82,144 c -2,0 -3,-1 -4,-2 -1,-3 -1,-6 -1,-9 7,-7 9,-5 18,-4 0,1 0,3 1,5 -6,2 -7,3 -10,9 -2,1 -3,1 -4,1 z m -14,-1 c -1,-2 -1,-2 -4,-3 0,0 0,-1 0,-2 1,0 2,-1 4,-1 -1,-1 -2,-3 -3,-4 3,-2 6,-3 9,-4 0,3 0,7 1,10 -3,3 -3,3 -7,4 z" />
+									<path
+									   class="state"
+									   id="brazil"
+									   d="m 292,514 c -2,-10 -4,-13 -13,-18 0,-2 -1,-4 -1,-6 1,-1 2,-1 3,-1 -5,-12 -5,-12 -7,-14 -5,-1 -5,-1 -6,-3 1,-1 1,-2 2,-2 -1,-1 -2,-2 -3,-2 0,-2 0,-3 0,-4 -8,-1 -14,-5 -20,-9 -2,-4 -2,-4 -3,-6 -5,3 -11,8 -16,7 -2,-6 -2,-6 -1,-9 -4,0 -5,2 -9,2 -5,-8 -14,-6 -9,-17 1,0 2,0 3,0 0,-7 1,-7 7,-9 0,0 1,1 1,1 3,0 5,0 8,0 4,-7 -1,-11 0,-18 2,-1 5,-2 7,-2 4,3 6,2 11,2 3,-3 3,-4 3,-9 6,-1 7,-3 15,-4 3,7 3,7 4,13 7,-1 14,1 20,-4 7,5 13,-5 16,-11 8,3 7,7 9,16 2,0 5,0 7,0 -1,2 -2,4 -3,5 5,1 10,1 16,3 0,1 0,2 0,2 14,-1 25,9 38,12 -1,14 -3,19 -14,27 0,3 -1,7 -1,10 -1,1 -2,1 -3,1 0,5 0,11 0,16 -12,18 -11,19 -31,23 0,1 0,2 0,3 -2,0 -3,0 -4,0 -5,8 -5,11 -5,20 -6,3 -9,9 -11,15 -1,0 -1,0 -2,0 -4,-4 -5,-7 -10,-8 0,-4 0,-4 0,-6 -3,0 -5,0 -7,0 1,-5 7,-10 11,-13 -1,-1 -1,-2 -2,-3 z" />
+									<path
+									   class="state"
+									   id="peru"
+									   d="m 227,487 c -4,-1 -7,-3 -10,-5 0,-1 0,-2 0,-2 -4,-3 -8,-5 -12,-7 -5,-7 -17,-29 -25,-34 0,-2 0,-5 0,-7 2,-2 4,-3 4,-7 -1,1 -2,2 -3,3 -4,-7 4,-16 7,-22 6,4 14,4 16,10 14,5 14,5 16,6 0,0 -1,1 -1,1 -6,2 -7,2 -7,9 -1,0 -2,0 -3,0 -5,11 4,9 9,17 4,0 5,-2 9,-2 -1,3 -1,3 1,9 5,1 11,-4 16,-7 1,2 1,2 3,6 6,4 12,8 20,9 0,1 0,2 0,4 1,0 2,1 3,2 -1,0 -1,1 -2,2 1,2 1,2 6,3 2,2 2,2 7,14 -1,0 -2,0 -3,1 0,2 1,4 1,6 9,5 11,8 13,18 -3,2 -3,2 -5,6 -4,1 -8,1 -12,2 2,-4 3,-7 4,-11 -7,-3 -12,-3 -16,-10 -2,0 -4,0 -5,0 0,-1 0,-2 0,-3 -5,2 -6,3 -9,-1 -1,0 -2,1 -3,1 -1,1 -2,3 -3,5 -5,-2 -4,-8 -10,-10 0,-3 -1,-6 -1,-8 -2,1 -4,2 -5,2 z" />
+									<path
+									   class="state"
+									   id="venezuela"
+									   d="m 219,423 c 0,0 1,-1 1,-1 -2,-1 -2,-1 -16,-6 -2,-6 -10,-6 -16,-10 1,-7 4,-13 5,-21 -1,0 -2,0 -3,-1 0,-3 1,-7 2,-10 1,0 2,0 3,0 0,-2 0,-4 0,-5 2,2 3,3 3,6 1,1 2,1 3,2 0,-2 -1,-4 -1,-6 4,-2 8,-5 12,-8 4,-2 7,-2 12,-5 2,0 3,0 5,-1 1,1 2,2 3,3 -1,1 -2,3 -4,4 1,2 2,3 3,5 0,-2 0,-2 0,-3 1,-1 1,-1 2,-1 0,-1 0,-2 0,-3 5,-1 8,0 13,2 10,0 18,-2 21,9 0,0 1,0 2,0 1,1 1,2 1,4 6,1 9,3 13,7 1,-1 2,-1 2,-2 5,3 16,7 19,9 -3,6 -9,16 -16,11 -6,5 -13,3 -20,4 -1,-6 -1,-6 -4,-13 -8,1 -9,3 -15,4 0,5 0,6 -3,9 -5,0 -7,1 -11,-2 -2,0 -5,1 -7,2 -1,7 4,11 0,18 -3,0 -5,0 -8,0 0,0 -1,-1 -1,-1 z" />
+								  </g>
+								</g>
+							  </g>
+							  <circle
+								 style="fill:#ffffff;stroke-width:0.255082"
+								 id="path2694"
+								 cx="7.7105312"
+								 cy="57.340294"
+								 r="3.1493721" />
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="6.4764867"
+								 y="58.465744"
+								 id="alaska"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696"
+								   x="6.4764867"
+								   y="58.465744"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4"
+								 cx="29.701838"
+								 cy="57.340294"
+								 rx="3.2036715"
+								 ry="3.1493723" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-7"
+								 cx="30.081936"
+								 cy="68.743195"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-5"
+								 cx="31.819519"
+								 cy="81.44928"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-9"
+								 cx="47.56638"
+								 cy="69.503387"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-95"
+								 cx="80.797691"
+								 cy="47.02338"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-57"
+								 cx="50.715755"
+								 cy="84.164261"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-73"
+								 cx="35.077488"
+								 cy="98.173538"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-6"
+								 cx="43.765411"
+								 cy="111.96561"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-2"
+								 cx="60.489666"
+								 cy="126.08349"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-28"
+								 cx="37.901066"
+								 cy="130.75327"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-77"
+								 cx="48.54377"
+								 cy="148.45488"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-62"
+								 cx="90.028603"
+								 cy="113.7032"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-3"
+								 cx="107.07866"
+								 cy="105.77547"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-27"
+								 cx="118.15576"
+								 cy="123.69431"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-1"
+								 cx="104.90667"
+								 cy="133.25102"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-21"
+								 cx="104.79808"
+								 cy="151.16986"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-35"
+								 cx="124.99751"
+								 cy="145.84853"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-0"
+								 cx="88.463371"
+								 cy="88.002625"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-214"
+								 cx="104.28234"
+								 cy="88.616959"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-54"
+								 cx="122.09788"
+								 cy="70.494247"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-954"
+								 cx="101.67144"
+								 cy="57.593338"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-10"
+								 cx="144.82805"
+								 cy="69.265587"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-25"
+								 cx="158.03613"
+								 cy="61.279316"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-72"
+								 cx="137.4561"
+								 cy="83.08799"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-55"
+								 cx="124.4016"
+								 cy="100.59637"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-627"
+								 cx="147.74611"
+								 cy="107.35399"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-08"
+								 cx="166.94389"
+								 cy="111.03996"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-541"
+								 cx="162.33643"
+								 cy="93.685165"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-26"
+								 cx="177.2339"
+								 cy="82.166496"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-09"
+								 cx="172.1657"
+								 cy="71.262161"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-69"
+								 cx="180.15196"
+								 cy="56.979012"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-74"
+								 cx="200.88556"
+								 cy="58.821995"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-8"
+								 cx="194.5887"
+								 cy="88.156204"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-698"
+								 cx="194.4351"
+								 cy="125.63027"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-356"
+								 cx="168.78688"
+								 cy="128.08759"
+								 rx="3.2036717"
+								 ry="3.1493726"
+								 inkscape:transform-center-x="-24.880323"
+								 inkscape:transform-center-y="-1.6894046" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-82"
+								 cx="189.21332"
+								 cy="148.05328"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-33"
+								 cx="170.16913"
+								 cy="148.20686"
+								 rx="3.2036717"
+								 ry="3.1493726"
+								 inkscape:transform-center-x="-16.740464"
+								 inkscape:transform-center-y="-0.46074672" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-52"
+								 cx="98.75338"
+								 cy="75.869629"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-4"
+								 cx="63.58305"
+								 cy="71.415741"
+								 rx="3.2036717"
+								 ry="3.1493726" />
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="28.472452"
+								 y="58.625004"
+								 id="northwest_territory"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-4"
+								   x="28.472452"
+								   y="58.625004"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="79.752174"
+								 y="48.198154"
+								 id="greenland"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-7"
+								   x="79.752174"
+								   y="48.198154"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="28.540873"
+								 y="69.973351"
+								 id="alberta"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-74"
+								   x="28.540873"
+								   y="69.973351"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="30.691023"
+								 y="82.652252"
+								 id="western_united_states"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-9"
+								   x="30.691023"
+								   y="82.652252"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="46.424831"
+								 y="70.758003"
+								 id="ontario"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-75"
+								   x="46.424831"
+								   y="70.758003"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="62.312222"
+								 y="72.669411"
+								 id="quebec"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-6"
+								   x="62.312222"
+								   y="72.669411"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="49.496475"
+								 y="85.655479"
+								 id="eastern_united_states"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-41"
+								   x="49.496475"
+								   y="85.655479"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="42.516857"
+								 y="113.2668"
+								 id="venezuela"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-0"
+								   x="42.516857"
+								   y="113.2668"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="59.137218"
+								 y="127.58345"
+								 id="brazil"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-3"
+								   x="59.137218"
+								   y="127.58345"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="36.750607"
+								 y="131.89912"
+								 id="peru"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-5"
+								   x="36.750607"
+								   y="131.89912"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="46.970741"
+								 y="149.59737"
+								 id="argentina"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-741"
+								   x="46.970741"
+								   y="149.59737"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="88.369522"
+								 y="115.05811"
+								 id="north_africa"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-90"
+								   x="88.369522"
+								   y="115.05811"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="105.80949"
+								 y="106.74792"
+								 id="egypt"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-08"
+								   x="105.80949"
+								   y="106.74792"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="116.85067"
+								 y="125.16103"
+								 id="east_africa"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-99"
+								   x="116.85067"
+								   y="125.16103"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="103.43733"
+								 y="134.49466"
+								 id="congo"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-2"
+								   x="103.43733"
+								   y="134.49466"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="103.45552"
+								 y="152.60199"
+								 id="south_africa"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-79"
+								   x="103.45552"
+								   y="152.60199"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="123.13079"
+								 y="101.91845"
+								 id="middle_east"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-1"
+								   x="123.13079"
+								   y="101.91845"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="136.20203"
+								 y="84.102913"
+								 id="afghanistan"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-8"
+								   x="136.20203"
+								   y="84.102913"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="146.35521"
+								 y="108.74448"
+								 id="india"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-85"
+								   x="146.35521"
+								   y="108.74448"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="160.86035"
+								 y="94.801994"
+								 id="china"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-95"
+								   x="160.86035"
+								   y="94.801994"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="143.57397"
+								 y="70.894844"
+								 id="ural"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-58"
+								   x="143.57397"
+								   y="70.894844"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="120.74474"
+								 y="71.67804"
+								 id="ukraine"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-71"
+								   x="120.74474"
+								   y="71.67804"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="100.38242"
+								 y="59.154171"
+								 id="scandinavia"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-81"
+								   x="100.38242"
+								   y="59.154171"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="97.636139"
+								 y="77.260132"
+								 id="northern_europe"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-92"
+								   x="97.636139"
+								   y="77.260132"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="87.226028"
+								 y="89.495033"
+								 id="western_europe"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-96"
+								   x="87.226028"
+								   y="89.495033"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="103.25026"
+								 y="89.870621"
+								 id="southern_europe"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-35"
+								   x="103.25026"
+								   y="89.870621"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="168.81172"
+								 y="149.23993"
+								 id="western_australia"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-45"
+								   x="168.81172"
+								   y="149.23993"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="188.12958"
+								 y="149.37538"
+								 id="eastern_australia"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-01"
+								   x="188.12958"
+								   y="149.37538"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="156.5768"
+								 y="62.516239"
+								 id="siberia"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-94"
+								   x="156.5768"
+								   y="62.516239"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="179.10312"
+								 y="58.301098"
+								 id="yakutsk"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-67"
+								   x="179.10312"
+								   y="58.301098"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="199.68314"
+								 y="59.905342"
+								 id="kamchatka"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-28"
+								   x="199.68314"
+								   y="59.905342"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="170.77617"
+								 y="72.447403"
+								 id="irkutsk"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-15"
+								   x="170.77617"
+								   y="72.447403"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="175.86115"
+								 y="83.266586"
+								 id="mongolia"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-78"
+								   x="175.86115"
+								   y="83.266586"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="165.75822"
+								 y="112.1568"
+								 id="siam"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-60"
+								   x="165.75822"
+								   y="112.1568"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="33.809982"
+								 y="99.343948"
+								 id="central_america"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-41-8"
+								   x="33.809982"
+								   y="99.343948"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-954-1"
+								 cx="83.702324"
+								 cy="66.347527"
+								 rx="3.2036719"
+								 ry="3.1493728" />
+							  <ellipse
+								 style="fill:#ffffff;stroke-width:0.257271"
+								 id="path2694-4-954-2"
+								 cx="83.087997"
+								 cy="78.019783"
+								 rx="3.2036719"
+								 ry="3.1493728" />
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="82.294655"
+								 y="68.045197"
+								 id="iceland"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-81-9"
+								   x="82.294655"
+								   y="68.045197"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="81.817169"
+								 y="79.341866"
+								 id="great_britain"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-81-2"
+								   x="81.817169"
+								   y="79.341866"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="123.91544"
+								 y="147.6008"
+								 id="madagascar"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-2-7"
+								   x="123.91544"
+								   y="147.6008"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="167.54956"
+								 y="129.17093"
+								 id="indonesia"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-60-5"
+								   x="167.54956"
+								   y="129.17093"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="192.65187"
+								 y="126.40645"
+								 id="new_guinea"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-60-9"
+								   x="192.65187"
+								   y="126.40645"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							  <text
+								 xml:space="preserve"
+								 style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+								 x="193.14764"
+								 y="89.508125"
+								 id="japan"><tspan
+								   sodipodi:role="line"
+								   id="tspan2696-28-4"
+								   x="193.14764"
+								   y="89.508125"
+								   style="font-size:4.23333px;stroke-width:0.264583">1</tspan></text>
+							</g>
+						  </g>
+						</svg>
+
+        			<!--SVG NON INLINE-->
+        				<!--<object  type="text/html" class="img"
+        						data="mappa_un_giocatore.html"
+        						id="background-object">
+        				</object> -->
+        			</div>
+
+                <div class="column-right-partita">
+                  <p id ="log"></p>
+                </div>
+				<div class="row-buttons-partita">
+				<nav id="gameNav">
+				<ul class="navbar-nav ml-auto my-2 my-lg-0" style="padding-top:10px;">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                      <label class="btn btn-light">
+                        <input type="radio" name="options" class="fase" id="faseAttacco" autocomplete="off" > Attacco
+                      </label>
+                      <label class="btn btn-light">
+                        <input type="radio" name="options" class="fase" id="faseSpostamento" autocomplete="off"> Spostamento
+                      </label>
+                      <label class="btn btn-light">
+                        <input type="radio" name="options" class="fase" id="annullaMossa" autocomplete="off"> Annulla selezione
+                      </label>
+                      <label class="btn btn-light">
+                        <input type="radio" name="options" class="fase" id="concludiTurno" autocomplete="off"> Concludi turno
+                      </label>
+                    </div>
+                </ul>
+				<nav>
+				<br>
+				<div data-toggle="buttons" >
+					<div id="confermaAtt"  class="btn-group btn-group-toggle">
+					<label class="btn btn-light">
+						<input type="radio" name="confirmoptions" class="fase" id="confermaConquista" autocomplete="off"> Conferma conquista
+					</label>
+					</div>
+					<div id="confermaSpos" class="btn-group btn-group-toggle">
+					<label class="btn btn-light">
+						<input type="radio" name="confirmoptions" class="fase" id="confermaSpostamento" autocomplete="off"> Conferma spostamento
+					</label>
+					</div>
+          <div id="pescaCard"  class="btn-group btn-group-toggle">
+          <label class="btn btn-light">
+            <input type="radio" name="pesca" class="fase" id="confermaPesca" autocomplete="off"> Pesca una carta
+          </label>
+          </div>
+				</div>
+				</div>
+        		</div>
+        		</div>
+        		</header>
+
+<!--Modals-->
+
+			<div class="modal fade" id="inizioPartitaModal" tabindex="-1" role="dialog" aria-labelledby="inizio" aria-hidden="true">
+			  <div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<h5 class="modal-title" id="titoloIniziale">Inizio della partita</h5>
+				  </div>
+				  <div class="modal-body">
+					Benvenuto, stai iniziando la partita! <br>
+					Questa è una versione demo, giocherai contro il computer <br>
+          In questa particolare modalità 1v1, non ci saranno la carte Risk.<br>
+					Ti verranno assegnati dei territori, dopodichè partirà la fase iniziale di posizionamento delle armate. <br>
+          Il resto delle regole è uguale al quelle del Risiko classico. <br>
+					Per vincere la partita di questa demo, devi lasciare il computer senza territori, buona fortuna!. <br>
+				  </div>
+				</div>
+			  </div>
+			</div>
+
+			<div class="modal fade" id="PosizonaArmateModal" tabindex="-1" role="dialog" aria-labelledby="armate" aria-hidden="true">
+			  <div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<h5 class="modal-title" id="faseIniziale">Fase iniziale: posizionamento armate</h5>
+				  </div>
+				  <div class="modal-body">
+					Ti sono stati assegnati i territori colorati di <br></div><br>
+					Seleziona un tuo territorio e aggiungi una o più armate.
+				  </div>
+				</div>
+			  </div>
+			</div>
+
+      <div class="modal" id="selectAtkModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Fase Attacco</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Seleziona la quantita di armate con cui vuoi attaccare:</p>
+              <select id="selectAttacco">
+                <option name="op1" value="0" selected="selected"></option>
+                <option name="op1" value="1">1 armata</option>
+                <option name="op1" value="2">2 armate</option>
+                <option name="op1" value="3">3 armate</option>
+              </select>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+                <button type="button" class="btn btn-primary" id="confermaAttacco">Conferma</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="modal" id="selectDefModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Ti stanno attaccando!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Seleziona la quantita di armate con cui vuoi difendere:</p>
+                <select id="selectDifesa">
+                  <option name="op1" value="0" selected="selected"></option>
+                  <option name="op1" value="1">1 armata</option>
+                  <option name="op1" value="2">2 armate</option>
+                  <option name="op1" value="3">3 armate</option>
+                </select>
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" id="confermaDifesa">Conferma</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <div class="modal fade" id="vittoriaModal" tabindex="-1" role="dialog" aria-labelledby="armate" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+              <h5 class="modal-title" id="vittoria">VITTORIA</h5>
+              </div>
+              <div class="modal-body">
+              Hai eliminato il tuo avversario!<br><br>
+              Hai concluso la demo!
+              </div>
+            </div>
+            </div>
+          </div>
+
+          <!-- Modali fase -->
+          <div class="modal fade" id="FaseAttacco" tabindex="-1" role="dialog" aria-labelledby="attacco" aria-hidden="true">
+			  <div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<p class="modal-title-phase" id="FaseAttacco"><font face = "Comic sans MS">Fase di attacco</font>
+					<img src="../images/crossedsword.svg" width="60px" height="80px"></img></p>
+				  </div>
+				  <div class="modal-body">
+					ISTRUZIONI FASE: <br>
+					Seleziona un tuo territorio e uno confinante avversario <br>
+					I dadi verranno lanciati automaticamente!
+				  </div>
+				</div>
+			  </div>
+			</div>
+
+
+			<div class="modal fade" id="FaseSpostamento" tabindex="-1" role="dialog" aria-labelledby="attacco" aria-hidden="true">
+			  <div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<p class="modal-title-phase" id="FaseSpostamento"><font face = "Comic sans MS">Fase di spostamento</font>
+					<img src="../images/spostamento.svg" width="60px" height="80px"></img></p>
+				  </div>
+				  <div class="modal-body">
+					ISTRUZIONI FASE: <br>
+					Seleziona un tuo territorio e un altro tuo territorio confinante<br>
+					Clicka sul territorio confinante per continuare a spostare le armate!<br>
+					N.B: Puoi effettuare un solo spostamento tattico a turno, quando premi su Conferma spostamento passi il turno.
+				  </div>
+				</div>
+			  </div>
+			</div>
+
+			<div class="modal fade" id="FaseFineTurno" tabindex="-1" role="dialog" aria-labelledby="attacco" aria-hidden="true">
+			  <div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<p class="modal-title-phase" id="FaseFineTurno"><font face = "Comic sans MS">Fine del turno</font>
+					<img src="../images/fineturno.svg" width="60px" height="80px"></img></p>
+				  </div>
+				  <div class="modal-body">
+					Hai concluso il tuo turno! Attendi le mosse dell'AI.<br>
+					Leggi le mosse del computer dal log. O attendi che l'avversario dichiari un attacco.
+				  </div>
+				</div>
+			  </div>
+			</div>
+
+
+        <!-- Bootstrap core JS-->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+		 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+        <!-- Third party plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+        <!-- Core theme JS-->
+        
+        
+        <script type="text/javascript" th:src="@{/js/scripts.js}"></script>
+        <script type="text/javascript" th:src="@{/js/Player_AI.js}"></script>
+        <script type="text/javascript" th:src="@{/js/partita.js}"></script>
+
+		<!-- Script DRisk-->
+		<script type="text/javascript" th:inline="javascript">
+			 $(window).on('load', function() {
+			  document.getElementById('gameNav').style.display = 'none';
+			  document.getElementById('confermaAtt').style.display = 'none';
+			  document.getElementById('confermaSpos').style.display = 'none';
+			  $('#inizioPartitaModal').modal('show');
+			  });
+
+			  $('#inizioPartitaModal').on('hide.bs.modal', function (e) {
+			  $('#PosizonaArmateModal').modal('show');
+			  $("#log").append("Qui verranno mostrati i messaggi di log, inizia posizionando le tue armate!<br>");
+			  });
+			  //forzamento scelta truppe attacco e difesa
+			  $(document).ready(function () {
+				$('#selectDefModal').modal({
+					   backdrop: 'static',
+					   keyboard: false
+				})
+			   });
+
+			  $(document).ready(function () {
+				$('#selectAtkModal').modal({
+					   backdrop: 'static',
+					   keyboard: false
+				})
+			   });
+		</script>
+    </body>
+</html>

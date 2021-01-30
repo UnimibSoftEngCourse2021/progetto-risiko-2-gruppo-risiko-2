@@ -110,6 +110,16 @@ public class ApplicationController {
     public String game(){
         return "game";
     }
+    
+    @RequestMapping(value="/demo1")
+    public String demo1(){
+        return "demo1";
+    }
+    
+    @RequestMapping(value="/demo2")
+    public String demo2(){
+        return "demo2";
+    }
 
     /*@RequestMapping(value="/home", method = RequestMethod.GET)
     public ModelAndView home(){
