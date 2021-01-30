@@ -23,5 +23,7 @@ E' possibile procedere in due modi:
 - server locale, occorre scaricare la cartella completa e scompattarla:
     - Avviare in MySQL lo script "database.sql" con porta 3306
     - Aggiungere su Eclipse il progetto Maven selezionando la cartella appena scompattata, in alternativa si può fare direttamente gitclone da Eclipse.
-    - Far partire una Maven build con parametro "clean install" e infine avviare "Maven SpringBoot Run".
+    - Far partire una Maven build con parametro "clean install" e infine avviare "Maven SpringBoot Run".<br>
+ Per utilizzare l'analisi di Sonar:
+ 	```mvn verify sonar:sonar```<br>
    N.B: occorre avere la porta 8080 libera.
