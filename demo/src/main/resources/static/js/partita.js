@@ -10,7 +10,7 @@ var players_AI = [];
 var cardGiocatore = [];
 
 //Armate iniziali del giocatore
-var armateIniziali = calcoloArmate(numGiocatori);
+var armateIniziali = calcoloArmate();
 
 //Fasi di gioco
 var faseAssegnazione = true;
@@ -138,7 +138,7 @@ function assegnaArmateAI(){
 
   for(var obj in players_AI){
 
-  armateIniziali = calcoloArmate(numGiocatori);
+  armateIniziali = calcoloArmate();
 
   var statiAI = players_AI[obj].getStatiAI();
 
