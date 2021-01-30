@@ -23,7 +23,17 @@ E' possibile procedere in due modi:
 - server locale, occorre scaricare la cartella completa e scompattarla:
     - Avviare in MySQL lo script "database.sql" con porta 3306
     - Aggiungere su Eclipse il progetto Maven selezionando la cartella appena scompattata, in alternativa si può fare direttamente gitclone da Eclipse.
-    - Far partire una Maven build con parametro "clean install" e infine avviare "Maven SpringBoot Run".<br>
- Per utilizzare l'analisi di Sonar:
+    - Modificare su eclipse nel percorso <b>demo/src/main/resources/application.properties</b> la parte .username e .password con i parametri scelti su MySQL
+	``` 
+	 ==============================================================
+	 = Data Source
+	 ==============================================================
+	spring.datasource.url = jdbc:mysql://localhost:3306/drisk_db?serverTimezone=UTC&useSSL=true
+	spring.datasource.username = root 
+	spring.datasource.password = root
+	``` 
+    - Far partire una Maven build con parametro "clean install" e infine avviare "Maven SpringBoot Run".
+    - Collegarsi a http://localhost:3306/ da un browser con supporto ad HTML5.
+<br> Per utilizzare l'analisi di Sonar:
  	```mvn verify sonar:sonar```<br>
    N.B: occorre avere la porta 8080 libera.
