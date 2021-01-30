@@ -8,7 +8,7 @@
         <meta name="author" content="" />
         <title>DRisk - A RISK GAME</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+        <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.ico}" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
@@ -18,50 +18,90 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link th:href="@{/css/styles.css}" rel="stylesheet" />
-<style>
-body {
-  background-image: url('../images/bg-masthead.jpg');
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: 100% 100%;
-}
-</style>
     </head>
-    <body id="page-top">
+   <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" href="#page-top">Home DRISK</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto my-2 my-lg-0">
+                    
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">Informazioni</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contatti</a></li>
+                        
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" th:href="@{/login}">Accedi</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" th:href="@{/registration}">Registrati</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" th:href="@{/logout}">Logout</a></li>
+               
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead">
             <div class="container h-100">
                 <div class="row h-100 align-items-center justify-content-center text-center">
                     <div class="col-lg-10 align-self-end">
-                        <h1 class="text-uppercase text-white font-weight-bold">DRisk il Risiko Online con mappa personalizzabile</h1>
-                        <h2><span class="text-success" th:utext="${session.user_name}"></span></h2>
+                    	Benvenuto <p th:value="${session.user_name}"></p>
+                        <h1 class="text-uppercase text-white font-weight-bold">DRisk</h1>
+                        <h3 class="text-uppercase text-white font-weight-bold">Drisk è una versione alternativa del Risiko in cui può giocare su mappe diverse da quella classica!</h3>
                         <hr class="divider my-4" />
                     </div>
                     <div class="col-lg-8 align-self-baseline">
-                        <p class="text-white-75 font-weight-light mb-5">Inizia una partita collegandoti ad una lobby o creandone una!</p>
-                        <a class="btn btn-primary btn-lg" th:href="@{/game}">Gioca</a>
-                        <a class="btn btn-primary btn-lg" th:href="@{/game}">Demo</a>
-                        <form th:action="@{/login}" method="get">
-					     	<button class="btn btn-primary btn-lg" 
-					                type="Submit">Accedi
-					        </button>
-					    </form>
-					    <form th:action="@{/registration}" method="get">
-					        <button class="btn btn-primary btn-lg"
-					                type="Submit">Registrati
-					        </button>
-					    </form>
-					    <form th:action="@{/logout}" method="get">
-					        <button class="btn btn-primary btn-lg" 
-					                type="Submit">Logout
-					        </button>
-					    </form>
-					    <a class="btn btn-primary btn-lg" th:href="@{/game}">About Us</a>
-                        
+                        <p class="text-white-75 font-weight-light mb-5">Inizia una partita collegandoti ad una lobby o creandone una!(in sviluppo...)<br> Oppure prova una delle demo disponibili</p>
+                        <a class="btn btn-primary btn-xl js-scroll-trigger" href="game.html">GIOCA</a><br><br>
+						<a class="btn btn-primary btn-xl js-scroll-trigger" th:href="demo1.html">DEMO 1 CONTINENTE</a>
+						<a class="btn btn-primary btn-xl js-scroll-trigger" href="demo2.html">DEMO 6 CONTINENTI</a>
                     </div>
                 </div>
             </div>
-       
+        </header>
+        <!-- About-->
+        <section class="page-section bg-primary" id="about">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="text-white mt-0">Progetto Universitario, Risiko Online</h2>
+                        <hr class="divider light my-4" />
+                        <p class="text-black-50 mb-4">Informazioni utili:</p>
+                        <p class="text-black-50 mb-3">Con la consegna del progetto abbiamo rilasciato due demo giocabili (ancora in sviluppo),
+                          una con un continente e due giocatori e un’altra con 6 continenti e numero di giocatori variabile.
+                          L’obiettivo prossimo è quello di continuare lo sviluppo del progetto, aggiustando gli scripts del gioco,
+                          aggiungendo l’implementazione delle lobby e del multiplayer.</p>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Contact-->
+        <section class="page-section" id="contact">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="mt-0">Contattaci</h2>
+                        <hr class="divider my-4" />
+                        <p class="text-muted mb-5">Se hai problemi con la registrazione o di altro tipo contattaci come meglio preferisci!</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
+                        <i class="fas fa-phone fa-3x mb-3 text-muted"></i>
+                        <div> N.D</div>
+                    </div>
+                    <div class="col-lg-4 mr-auto text-center">
+                        <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
+                        <a class="d-block" href="mailto:s.marotta10@campus.unimib.it">s.marotta10@campus.unimib.it</a>
+                        <a class="d-block" href="mailto:a.mognato0@campus.unimib.it">a.mognato0@campus.unimib.it</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer-->
         <footer class="bg-light py-5">
-            <div class="container"><div class="small text-center text-muted">Copyright © 2020 - Start Bootstrap</div></div>
+            <div class="container"><div class="small text-center text-muted">DRisk-Project 2020</div></div>
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -70,6 +110,6 @@ body {
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
         <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
+        <script th:src="@{/js/scripts.js}"></script>
     </body>
 </html>

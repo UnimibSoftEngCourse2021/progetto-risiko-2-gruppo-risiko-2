@@ -20,7 +20,7 @@ import com.webapp.drisk.model.User;
 import com.webapp.drisk.service.UserService;
 
 @Controller
-public class LoginController {
+public class ApplicationController {
 
     @Autowired
     private UserService userService;
@@ -35,7 +35,7 @@ public class LoginController {
 
     
     
-    @RequestMapping(value="/login", method = RequestMethod.GET)
+    @RequestMapping(value="/login")
     public ModelAndView login(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login");
@@ -64,7 +64,7 @@ public class LoginController {
         return modelAndView;
     }
     
-    @RequestMapping(value="/logout", method = RequestMethod.GET)
+    @RequestMapping(value="/logout")
     public ModelAndView logout(HttpServletRequest richiesta){
     	richiesta.getSession().invalidate();
     	ModelAndView modelAndView = new ModelAndView();
@@ -75,7 +75,7 @@ public class LoginController {
     
     
 
-    @RequestMapping(value="/registration", method = RequestMethod.GET)
+    @RequestMapping(value="/registration")
     public ModelAndView registration(){
         ModelAndView modelAndView = new ModelAndView();
         User user = new User();
