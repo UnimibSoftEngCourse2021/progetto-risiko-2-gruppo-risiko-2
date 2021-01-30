@@ -7,7 +7,9 @@ In particolare la demo1 permette di giocare contro una IA nel continente austral
 La demo2 permette di giocare nella mappa classica del Risiko! con la possibilità di scegliere fino a 5 IA nemiche.<br>
 Oltre alle demo è stata sviluppata la struttura base del sito web con utenze e DB, accessibile da un server locale.<br>
 ## Requisiti avvio demo: ##
-- Per visualizzare la parte di frontend occorre un browser che supporti HTML5 (Chrome, Firefox, Edge etc.)
+- Per visualizzare la parte di frontend occorre:
+	- un browser che supporti HTML5 (Chrome, Firefox, Edge etc.)
+	- Winrar o simili per scompattare il file .rar
 - Per visualizzare anche la parte di backend occorre:
 	- Maven (3.6+)
 	- MySQL(8.0+)
