@@ -11,7 +11,8 @@ Oltre alle demo è stata sviluppata la struttura base del sito web con utenze e 
 - Per visualizzare anche la parte di backend occorre:
 	- Maven (3.6+)
 	- MySQL(8.0+)
-	- JDK 15.0
+	- JDK (15.0)
+	- Eclipse (4.17.0)
 ## Istruzioni avvio demo: ##
 E' possibile procedere in due modi:
  - locale, occorre scaricare la cartella <b>demolocal</b>.rar dal branch master di questa repository
@@ -19,5 +20,6 @@ E' possibile procedere in due modi:
    Sarà comunque possibile navigare nella struttura del sito senza avere le varie opzioni di login e registrazione.
 - server locale, occorre scaricare la cartella completa e scompattarla:
     - Avviare in MySQL lo script "database.sql" con porta 3306
-    - far partire una build di Maven con parametro "clean install" e infine avviare "Maven SpringBoot Run".
+    - Aggiungere su Eclipse il progetto Maven selezionando la cartella appena scompattata, in alternativa si può fare direttamente gitclone da Eclipse.
+    - Far partire una Maven build con parametro "clean install" e infine avviare "Maven SpringBoot Run".
    N.B: occorre avere la porta 8080 libera.
